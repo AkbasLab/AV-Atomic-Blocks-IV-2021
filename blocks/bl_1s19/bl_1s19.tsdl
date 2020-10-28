@@ -5,11 +5,12 @@
 # @version [1.00]
 # @modified [10.28.2020, Quentin Goss, Created.]
 $$template():
-    duration: $$param("[1..4]second")
-    dut_speed_start: $$param("[0..90]mph")
-    npc_speed_gt_dut: $$param("[10..30]mph")
-    npc_dist_gt_dut_start: $$param("[-50..-10]feet")
-    npc_dist_gt_dut_end: $$param("[-10..10]feet")
+    duration: $$param()
+    dut_speed_start: $$param()
+    npc_speed_gt_dut: $$param()
+    npc_dist_gt_dut_start: $$param()
+    npc_dist_gt_dut_end: $$param()
+    map: $$param()
     proj_path: $$param()
     config_path: $$param()
 $$expand():
@@ -18,7 +19,7 @@ import $$(proj_path)/blocks/bl_1s19/bl_1s19_sce.sdl
 import $$(proj_path)/blocks/bl_1s19/bl_1s19_cov.sdl
 
 extend test_config:
-    set map = "$$(proj_path)/maps/long_single_road_2.xodr"
+    set map = "$$(proj_path)/maps/$$(map).xodr"
 
 extend top.main:
     do block : bl_1s19() with:
