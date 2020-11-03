@@ -1,0 +1,26 @@
+# @author [Quentin Goss - gossq@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_1s18, 
+# npc is on the side of and ahead of the DUT, when npc changes into 
+# DUT's lane. npc may or may not accelerate.
+# @version [1.00]
+# @modified [10.28.2020, Quentin Goss, Created.]
+
+scenario dut.bl_1s18:
+    
+    npc: car
+    p_dur: time
+    p_dut_speed_start: speed
+    p_npc_speed_gt_dut: speed
+    p_npc_dist_gt_dut_start: distance
+    
+    do serial():    
+        cut_in_s : parallel(duration: p_dur):
+            dut.car.drive() with:
+                speed(p_dut_speed_start, at: start)
+            npc.drive() with:
+                lane(side_of: dut.car, at: start)
+                lane(same_as: dut.car, at: end)
+                speed(p_npc_speed_gt_dut, faster_than: dut.car)
+                position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+                
