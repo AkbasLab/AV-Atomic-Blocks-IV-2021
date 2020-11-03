@@ -4,7 +4,7 @@
 # Test template.
 # @version [1.00]
 # @modified [10.28.2020, Quentin Goss, Created.]
-# @modified [11.03.2020, Quentin Goss, Removed "duration" parameter.]
+# @modified [11.03.2020, Quentin Goss, Added npc_dist_gt_dut_end.]
 $$template():
     duration: $$param("[1..10]second")
     dut_speed_start: $$param()

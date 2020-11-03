@@ -5,7 +5,7 @@
 # DUT's lane. npc may or may not accelerate.
 # @version [1.00]
 # @modified [10.28.2020, Quentin Goss, Created.]
-# @modified [11.03.2020, Quentin Goss, Removed "duration" parameter.]
+# @modified [11.03.2020, Quentin Goss, Added p_npc_dist_gt_dut_end, and fixed some memory issues.]
 scenario dut.bl_1s18:
     
     npc: car
@@ -15,13 +15,12 @@ scenario dut.bl_1s18:
     p_npc_dist_gt_dut_start: distance
     p_npc_dist_gt_dut_end: distance
     
-    do serial():    
-        cut_in_s : parallel():
-            dut.car.drive()
-            npc.drive(duration:p_dur) with:
-                lane(side_of: dut.car, at: start)
-                lane(same_as: dut.car, at: end)
-                speed(p_npc_speed_gt_dut, faster_than: dut.car)
-                position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
-                position(p_npc_dist_gt_dut_end,ahead_of: dut.car, at: end)
-                avoid_collisions(false)
+    do cut_in_s : parallel():
+        dut.car.drive()
+        npc.drive(duration:p_dur) with:
+            lane(side_of: dut.car, at: start)
+            lane(same_as: dut.car, at: end)
+            speed(p_npc_speed_gt_dut, faster_than: dut.car)
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            position(p_npc_dist_gt_dut_end,ahead_of: dut.car, at: end)
+            avoid_collisions(false)

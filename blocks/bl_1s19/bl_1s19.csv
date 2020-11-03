@@ -1,3 +1,3 @@
 *bl_1s19,template /pub/home/user3/AV_ValidationVerification/blocks/bl_1s19/bl_1s19.tsdl,,,,,,,,
-runs,seed,duration,dut_speed_start,npc_speed_gt_dut,npc_dist_gt_dut_start,npc_dist_gt_dut_end,map,proj_path,config_path
-2,1,[5..10]second,[0..40]mph,[10..30]mph,[-20..-10]feet,[-10..10]feet,long_single_road_2,/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl
+runs,seed,dut_speed_start,npc_speed_gt_dut_start,npc_dist_gt_dut_start,npc_dist_gt_dut_end,map,proj_path,config_path
+2,1,[0..40]mph,[10..30]mph,[-10..-1]feet,[0..20]feet,long_single_road_2,/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl
