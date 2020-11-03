@@ -4,11 +4,13 @@
 # Test template.
 # @version [1.00]
 # @modified [10.28.2020, Quentin Goss, Created.]
+# @modified [11.03.2020, Quentin Goss, Removed "duration" parameter.]
 $$template():
-    duration: $$param()
+    duration: $$param("[1..10]second")
     dut_speed_start: $$param()
     npc_speed_gt_dut: $$param()
     npc_dist_gt_dut_start: $$param()
+    npc_dist_gt_dut_end: $$param()
     map: $$param()
     proj_path: $$param()
     config_path: $$param()
@@ -26,5 +28,6 @@ extend top.main:
         keep (p_dut_speed_start in $$(dut_speed_start))
         keep (p_npc_speed_gt_dut in $$(npc_speed_gt_dut))
         keep (p_npc_dist_gt_dut_start in $$(npc_dist_gt_dut_start))
+        keep (p_npc_dist_gt_dut_end in $$(npc_dist_gt_dut_end))
         keep (dut.car.color == red)
         keep (npc.color == blue)
