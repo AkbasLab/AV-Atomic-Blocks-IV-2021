@@ -5,11 +5,11 @@
 # @version [1.00]
 # @modified [10.28.2020, Quentin Goss, Created.]
 # @modified [11.03.2020, Quentin Goss, Adjusted parameters and fixed memory issues.]
+# @modified [11.05.2020, Quentin Goss, Removed "dut_speed_start".]
 scenario dut.bl_1s19:
     
     npc: car
     p_dur : time
-    p_dut_speed_start : speed
     p_npc_speed_gt_dut_start : speed
     p_npc_dist_gt_dut_start : distance
     p_npc_dist_gt_dut_end : distance
