@@ -1,0 +1,26 @@
+# bl_1s21_sce.sdl
+# Author: Jacob Preseau
+# Last Modified: November 5 2020
+# Description:
+# npc starts behind and in the same lane as DUT, then npc cuts out
+# to the side. npc may or may not accelerate.
+
+scenario dut.bl_1s15:
+    
+    npc: car
+    p_dur: time
+    p_dut_speed_start: speed
+    p_npc_speed_gt_dut: speed
+    p_npc_dist_gt_dut_start: distance
+    p_npc_dist_gt_dut_end: distance
+    
+    do serial():
+        cut_out_s: parallel(duration: p_dur):
+            dut.car.drive() with:
+                speed(p_dut_speed_start, at: start)
+            npc.drive() with:
+                lane(same_as: dut.car, at: start)
+                lane(side_of: dut.car, at: end)
+                speed(p_npc_speed_gt_dut, faster_than: dut.car)
+                position(distance: p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+                position(distance: p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)

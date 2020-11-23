@@ -1,0 +1,1 @@
+CAR2 is behind and in the same lane as DUT, when CAR2 changes lanes to the right of the DUT.
