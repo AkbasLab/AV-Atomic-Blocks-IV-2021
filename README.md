@@ -24,5 +24,5 @@ Daytona Beach Campus<br>
 1 Aerospace Boulevard<br>
 Daytona Beach, FL 32114
 
-# Aknowledgements
+# Acknowledgements
 We would like to give great thanks to our supporter [Foretellix Inc.](https://www.foretellix.com/) whom provides us with the infrastructure, training, and support to make this research possible. 
