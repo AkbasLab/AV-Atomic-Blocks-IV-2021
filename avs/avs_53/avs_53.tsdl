@@ -1,0 +1,54 @@
+# @author [Quentin Goss - gossq@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# avs_53, 
+# Pattern 1s19 + 1s18
+#  Original Description:
+#  "A Cruise autonomous vehicle. (""Cruise AV""), was involved in a collision while operating in autonomous mode, traveling westbound on McAllister Street at the intersection of Polk Street. Another vehicle attempted to pass the Cruise AV on the right but crossed. Into its lane, scraping the Cruise AV's right sensor. There were no injuries and police were not called.
+#  
+#  AV car model: Chevrolet Bolt, 2017
+#  Other car model: Unknown
+#  Location: McAllister St & & Polk Street, San Francisco, CA
+#  Time: 03: 12 Pm 
+#  Vehicle 1: Moving (AV)
+#  Vehicle 2: Moving"
+# @version [1.00]
+# @modified [11.03.2020, Quentin Goss, Created.]
+# @modified [11.05.2020, Quentin Goss, Removed the second npc color change from bl_1s18 which was causing an error.]
+$$template():
+    map: $$param()
+    proj_path: $$param()
+    config_path: $$param()
+    bl_1s18_duration: $$param("[1..4]second")
+    bl_1s18_npc_speed_gt_dut: $$param()
+    bl_1s18_npc_dist_gt_dut_start: $$param()
+    bl_1s18_npc_dist_gt_dut_end: $$param()
+    bl_1s19_duration: $$param("[1..4]second")
+    bl_1s19_npc_speed_gt_dut_start: $$param()
+    bl_1s19_npc_dist_gt_dut_start: $$param()
+    bl_1s19_npc_dist_gt_dut_end: $$param()
+$$expand():
+import $$(config_path)
+import $$(proj_path)/blocks/bl_1s18/bl_1s18_sce.sdl
+import $$(proj_path)/blocks/bl_1s18/bl_1s18_cov.sdl
+import $$(proj_path)/blocks/bl_1s19/bl_1s19_sce.sdl
+import $$(proj_path)/blocks/bl_1s19/bl_1s19_cov.sdl
+
+extend test_config:
+    set map = "$$(proj_path)/maps/$$(map).xodr"
+    
+extend top.main:
+    npc : car
+
+    do pattern : serial():
+        bl_1s19(npc: npc) with:
+            keep (dut.car.color == red)
+            keep (npc.color == blue)
+            keep (p_dur in $$(bl_1s19_duration))
+            keep (p_npc_speed_gt_dut_start in $$(bl_1s19_npc_speed_gt_dut_start))
+            keep (p_npc_dist_gt_dut_start in $$(bl_1s19_npc_dist_gt_dut_start))
+            keep (p_npc_dist_gt_dut_end in $$(bl_1s19_npc_dist_gt_dut_end))
+        bl_1s18(npc: npc) with:
+            keep (p_dur in $$(bl_1s18_duration))
+            keep (p_npc_speed_gt_dut in $$(bl_1s18_npc_speed_gt_dut))
+            keep (p_npc_dist_gt_dut_start in $$(bl_1s18_npc_dist_gt_dut_start))
+            keep (npc_dist_gt_dut_end in $$(bl_1s18_npc_dist_gt_dut_end)
