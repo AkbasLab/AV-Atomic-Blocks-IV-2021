@@ -16,7 +16,7 @@ Yara Alrashidi `alrashy1@my.erau.edu` [email](mailto:ALRASHY1@my.erau.edu)<br>
 Jacob Preseau `preseauj@my.erau.edu` [email](mailto:PRESEAUJ@my.erau.edu)<br>
 John Thompson `thomj130@my.erau.edu` [email](mailto:THOMJ130@my.erau.edu)<br>
 Ariane Uwase `uwasea@my.erau.edu` [email](mailto:UWASEA@my.erau.edu)<br>
-Dillon Mead `meadd@my.erau.edu` [email](mailto:meadd@my.erau.edu)<br>
+<!-- Dillon Mead `meadd@my.erau.edu` [email](mailto:meadd@my.erau.edu)<br> -->
 
 **Embry-Riddle Aeronautical University**<br>
 *Department of Electrical Engineering & Computer Science*<br>
