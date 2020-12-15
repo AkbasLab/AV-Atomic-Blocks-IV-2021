@@ -1,0 +1,27 @@
+# bl_1s1_sce.sdl
+# Author: Jacob Preseau
+# Last Modified: December 14 2020
+# Description:
+# npc accelerates in the lane right of the dut until it is
+# ahead of the dut. Based on Quentin's 1s19, of which 1s1 is
+# a specific form.
+
+scenario dut.bl_1s1:
+
+    npc: car
+    p_dur : time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_dist_gt_dut_start : distance
+    p_npc_dist_gt_dut_end : distance
+    
+    do drive_ahead_s : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+        npc.drive(duration: p_dur) with:
+            lane(right_of: dut.car)
+            keep_lane()
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            position(distance: p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            position(distance: p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
+            avoid_collisions(false)

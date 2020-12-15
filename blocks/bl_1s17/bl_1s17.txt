@@ -1,0 +1,1 @@
+CAR2 accelerates in the lane on the DUT's left side until it is ahead of the DUT.
