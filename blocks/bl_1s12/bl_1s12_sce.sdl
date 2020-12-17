@@ -1,0 +1,23 @@
+# @author [Yara AlRashidi - alrashy1@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_1s12
+# npc is behind, and to the left of the DUT, then npc changes into the DUTs lane
+# @version [2.00]
+# @modified [12.17.2020, Yara AlRashidi, updated to newest version]
+
+scenario dut.bl_1s12:
+    npc: car
+    p_dur: time
+    p_npc_speed_gt_dut: speed
+    p_npc_dist_gt_dut_start: distance
+    p_npc_dist_gt_dut_end: distance
+    
+    
+    do cut_in_s : parallel():
+        dut.car.drive()
+        npc.drive(duration: p_dur) with:
+            lane(left_of: dut.car, at: start)
+            lane(same_as: dut.car, at: end)
+            speed(p_npc_speed_gt_dut, faster_than: dut.car)
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            avoid_collisions(false)    
