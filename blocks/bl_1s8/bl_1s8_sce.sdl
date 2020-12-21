@@ -1,0 +1,25 @@
+# bl_1s8_sce.sdl
+# Author: John Thompson
+# Last Modified: December 21 2020
+# Description:
+#     NPC1 is behind, and in the same lane as DUT, no acceleration
+
+
+scenario dut.bl_1s8:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut : speed
+    p_npc_dist_lt_dut : distance
+    
+    do slow_behind : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            lane(same_as: dut.car)
+            keep_lane()
+            speed(p_npc_speed_gt_dut, faster_than: dut.car, at: start)
+            keep_speed()
+            position(p_npc_dist_lt_dut, behind: dut.car, at: start)
+            avoid_collisions(false)
