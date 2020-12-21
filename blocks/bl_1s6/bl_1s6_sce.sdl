@@ -20,7 +20,7 @@ scenario dut.bl_1s6:
         npc.drive(duration: p_dur) with:
             lane(same_as: dut.car)
             keep_lane()
-            speed(p_npc_speed_gt_dut_start, faster_than: dut.car)
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
             position(p_npc_dist_lt_dut_start, behind: dut.car, at: start)
             position(p_npc_dist_lt_dut_end, behind: dut.car, at: end)
             avoid_collisions(false)
