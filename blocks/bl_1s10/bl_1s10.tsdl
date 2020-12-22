@@ -1,0 +1,31 @@
+# bl_1s10.tsdl
+# Author: John Thompson
+# Last Modified: December 22 2020
+# Description:
+#   Template file for bl_1s10.
+
+$$template():
+    duration: $$param()
+    dut_speed_start: $$param()
+    npc_speed_gt_dut_start: $$param()
+    npc_dist_gt_dut_start: $$param()
+    map: $$param()
+    proj_path: $$param()
+    config_path: $$param()
+
+$$expand():
+import $$(config_path)
+import $$(proj_path)/blocks/bl_1s10/bl_1s10_sce.sdl
+
+
+extend test_config:
+    set map = "$$(proj_path)/maps/$$(map).xodr"
+
+extend top.main:
+    do block: bl_1s10() with:
+        keep (p_dur in $$(duration))
+        keep (p_dut_speed_start in $$(dut_speed_start))
+        keep (p_npc_speed_gt_dut_start in $$(npc_speed_gt_dut_start))
+        keep (p_npc_dist_gt_dut_start in $$(npc_dist_gt_dut_start))
+        keep (dut.car.color == red)
+        keep (npc.color == blue)
