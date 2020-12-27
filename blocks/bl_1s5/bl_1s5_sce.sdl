@@ -1,0 +1,23 @@
+# bl_1s5_sce.sdl
+# Author: Jacob Preseau
+# Last Modified: December 21 2020
+# Description:
+# NPC starts ahead of DUT, then NPC brakes.
+
+scenario dut.bl_1s5:
+
+    npc: car
+    p_dur: time
+    p_dut_speed_start: speed
+    p_npc_change_speed: speed
+    p_npc_dist_gt_dut_start: distance
+    
+    do npc_brake_s: parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+        npc.drive(duration: p_dur) with:
+            lane(same_as: dut.car)
+            speed(p_dut_speed_start, at: start)
+            position(distance: p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            change_speed(p_npc_change_speed)
+            avoid_collisions(false)

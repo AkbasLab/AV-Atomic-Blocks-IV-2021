@@ -1,0 +1,1 @@
+CAR2 is ahead of DUT when CAR2 accelerates.
