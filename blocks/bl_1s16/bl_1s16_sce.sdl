@@ -1,0 +1,27 @@
+# bl_1s16_sce.sdl
+# Author: John Thompson
+# Last Modified: December 27 2020
+# Description:
+#     NPC1 is behind and the lane to the right of DUT, when NPC1 changes lanes to the left of DUT
+
+
+scenario dut.bl_1s16:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_dist_lt_dut_start : distance
+    p_npc_dist_lt_dut_end : distance
+    
+    do jump_lanes_behind : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            lane(right_of: dut.car, at: start)
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            position(p_npc_dist_lt_dut_start, behind: dut.car, at: start)
+            
+            change_lane(lane: 2, side: left)
+            position(p_npc_dist_lt_dut_end, behind: dut.car, at: end)
+            avoid_collisions(false)
