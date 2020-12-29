@@ -1,0 +1,31 @@
+# bl_1s8.tsdl
+# Author: John Thompson
+# Last Modified: December 21 2020
+# Description:
+#   Template file for bl_1s8.
+
+$$template():
+    duration: $$param()
+    dut_speed_start: $$param()
+    npc_speed_gt_dut: $$param()
+    npc_dist_lt_dut: $$param()
+    map: $$param()
+    proj_path: $$param()
+    config_path: $$param()
+
+$$expand():
+import $$(config_path)
+import $$(proj_path)/blocks/bl_1s8/bl_1s8_sce.sdl
+
+
+extend test_config:
+    set map = "$$(proj_path)/maps/$$(map).xodr"
+
+extend top.main:
+    do block: bl_1s6() with:
+        keep (p_dur in $$(duration))
+        keep (p_dut_speed_start in $$(dut_speed_start))
+        keep (p_npc_speed_gt_dut in $$(npc_speed_gt_dut))
+        keep (p_npc_dist_lt_dut in $$(npc_dist_lt_dut))
+        keep (dut.car.color == red)
+        keep (npc.color == blue)

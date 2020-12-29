@@ -1,0 +1,26 @@
+# bl_1s10_sce.sdl
+# Author: John Thompson
+# Last Modified: December 22 2020
+# Description:
+#     NPC1 is in lane 1 while DUT changes from lane 3 to lane 2.
+
+
+scenario dut.bl_1s10:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_dist_gt_dut_start : distance
+    
+    do accelerate_behind : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            lane(3, at: start)
+            lane(2, at: end)
+            
+        npc.drive(duration: p_dur) with:
+            lane(1, at: start)
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            position(p_npc_dist_gt_dut_start, behind: dut.car, at: start)
+            
+            avoid_collisions(false)

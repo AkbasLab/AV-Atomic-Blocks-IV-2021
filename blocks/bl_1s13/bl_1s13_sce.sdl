@@ -1,0 +1,26 @@
+# bl_1s13_sce.sdl
+# Author: John Thompson
+# Last Modified: December 27 2020
+# Description:
+#    NPC1 changes lanes to the left. May or may not accelerate.
+
+
+scenario dut.bl_1s13:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_dist_gt_dut_start : distance
+    p_npc_dist_gt_dut_end : distance
+    
+    do change_lanes_and_accelerate : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            
+            change_lane(side: left)
+            position(p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
+            avoid_collisions(false)

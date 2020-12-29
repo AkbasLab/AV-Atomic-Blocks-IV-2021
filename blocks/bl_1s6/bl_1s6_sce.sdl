@@ -1,0 +1,26 @@
+# bl_1s6_sce.sdl
+# Author: John Thompson
+# Last Modified: December 20 2020
+# Description:
+#     NPC breaks directly behind the DUT
+
+
+scenario dut.bl_1s6:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_dist_lt_dut_start : distance
+    p_npc_dist_lt_dut_end : distance
+    
+    do slow_behind : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            lane(same_as: dut.car)
+            keep_lane()
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            position(p_npc_dist_lt_dut_start, behind: dut.car, at: start)
+            position(p_npc_dist_lt_dut_end, behind: dut.car, at: end)
+            avoid_collisions(false)

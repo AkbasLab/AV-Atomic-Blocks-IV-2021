@@ -1,0 +1,27 @@
+# bl_1s4_sce.sdl
+# Author: John Thompson
+# Last Modified: December 27 2020
+# Description:
+#     NPC1 is ahead of, and in the same lane as DUT, when NPC1 changes lanes
+
+
+scenario dut.bl_1s4:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_dist_gt_dut_start : distance
+    p_npc_dist_gt_dut_end : distance
+    
+    do change_lane_ahead : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            lane(same_as: dut.car, at: start)
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            
+            change_lane()
+            position(p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
+            avoid_collisions(false)
