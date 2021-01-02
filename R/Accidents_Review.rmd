@@ -1,0 +1,319 @@
+---
+# title: "Accidents Review"
+# author: "Quentin Goss"
+# date: "1/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(tidyverse)
+library(readxl)
+library(waffle)
+library(RColorBrewer)
+```
+
+```{r include=FALSE}
+top_dir <- ".."
+fn <- file.path(getwd(),top_dir,"functional_scenarios/cadmv_accidents.xlsx")
+df_raw <- read_excel(fn,sheet=2L)
+```
+
+
+
+
+```{r include=FALSE}
+get_pattern <- function(one,two,three) {
+  if (is.na(one)) {return (NA_character_)}
+  else if (is.na(two)) {return (paste0(one))}
+  else if (is.na(three)) {return (paste0(one,"-",two))}
+  return (paste0(one,"-",two,"-",three))
+}
+dfr_pattern <- list(df_raw$`1`,df_raw$`2`,df_raw$`3`) %>% pmap_chr(get_pattern)
+
+df <- df_raw %>% select(-`4`,-`Pattern`) %>% mutate(pattern = dfr_pattern)
+```
+
+
+
+```{r include=FALSE}
+# Original accidents
+original_number_of_accidents <- nrow(df)
+
+# Unique blocks (excluding NA)
+unique_blocks <- c(df$`1`[!is.na(df$`1`)],df$`2`[!is.na(df$`2`)],df$`3`[!is.na(df$`3`)]) %>% unique
+unique_blocks_n <- unique_blocks %>% length
+
+# Unique patterns (excluding NA)
+unique_patterns <- df$pattern[!is.na(df$pattern)] %>% unique
+unique_patterns_n <- unique_patterns %>% length 
+```
+
+
+
+
+```{r include=FALSE}
+block_count <- df$pattern %>% str_count("-") + 1
+
+# Scenarios with 1/2/3 blocks:
+block_count_1 <- block_count[block_count == 1] %>% na.omit %>% length
+block_count_2 <- block_count[block_count == 2] %>% na.omit %>% length
+block_count_3 <- block_count[block_count == 3] %>% na.omit %>% length
+
+# Scenarios not defined with blocks
+block_count_NA <- block_count[is.na(block_count)] %>% length
+```
+
+# Progress Report {.tabset}
+
+**Project Advisor:** <br>
+Dr. Mustafa Ilhan Akbas `akbasm@erau.edu` [email](mailto:akbasm@erau.edu)<br>
+
+**Phd. Student:** <br>
+Quentin Goss `gossq@my.erau.edu` [email](mailto:gossq@my.erau.edu)<br>
+
+**Students:**<br>
+Yara Alrashidi `alrashy1@my.erau.edu` [email](mailto:ALRASHY1@my.erau.edu)<br>
+Jacob Preseau `preseauj@my.erau.edu` [email](mailto:PRESEAUJ@my.erau.edu)<br>
+John Thompson `thomj130@my.erau.edu` [email](mailto:THOMJ130@my.erau.edu)<br>
+Ariane Uwase `uwasea@my.erau.edu` [email](mailto:UWASEA@my.erau.edu)<br>
+Dillon Mead `meadd@my.erau.edu` [email](mailto:meadd@my.erau.edu)<br>
+
+**Embry-Riddle Aeronautical University**<br>
+*Department of Electrical Engineering & Computer Science*<br>
+Daytona Beach Campus<br>
+1 Aerospace Boulevard<br>
+Daytona Beach, FL 32114
+
+
+## Accidents, Atomic Blocks, and Patterns
+
+We reviewed 96 autonomous vehicle accident reports. To classify these scenarios we identified short, modular, scenarios called atomic blocks. Out of the 96 accidents, we identify 42 atomic blocks. We use these atomic blocks in serial to construct the report accidents and similar accidents. We call this the pattern.
+
+**Observation:** There are more unique atomic blocks than patterns. This because we combine some specfic atomic block such as *"Change into the lane to the *`<right>`* of the DUT."* and *"Change into the lane to the *`<left>`* of the DUT"* into *"Change into the lane to the *`<side>`* of the DUT"*.
+
+```{r echo=FALSE}
+parts <- c(unique_patterns_n,
+           unique_blocks_n - unique_patterns_n,
+           original_number_of_accidents - unique_blocks_n)
+names(parts) <- c(paste0("Unique patterns. (",unique_patterns_n,")"),
+                  paste0("Unique blocks. (",unique_blocks_n,")"),
+  paste0("Original number of accidents. (",original_number_of_accidents,")"))
+
+chart <- waffle(parts,
+                row = 6,
+                legend_pos = "top",
+                colors = c("#222222", "#555555", "#AAAAAA"),
+                xlab = "1 Block = 1 Scenario")
+
+chart
+```
+
+## Atomic BLocks
+
+This classification method comprises the number of actors excluding the DUT, a path requirement, whether a pedestrian is or is not involved, and an increasing index starting from 1.
+
+%
+The path requirement is represented by a letter, and can be one of the following:
+The first letter is S, chosen for its resemble to an S-curve. Scenarios which are classified by the path requirement S may be a length of road that consists of one or more connected street network edges. This may include traversing an intersection as long as all actors traverse the intersection in the same way, because routes through intersections in well known traffic simulators such as SUMO are defined by edges.
+The second letter is T, chosen for its resemblance to a T-intersection. Scenarios which are classified by the path requirement T include a 3-way intersection.
+The third letter is X, chosen for its resemblance to two segments crossing. Scenarios which are classified by the path requirement X include a 4-way intersection.
+The fourth letter is M, chosen for the five vertices of the four edges that makeup the capital letter M. Scenarios which are classified by the path requirement M include a 5-way intersection.
+%
+Scenarios that include a pedestrian actor include the designation P. The number of non-DUT actors in a scenario currently has a range of [1..3].
+
+As an example, bl\_2TP3 is broken down as follows: The prefix "bl\_" identifies this item as an atomic block. The 2 means that there are two non-dut actors, the T means that the scenario occurs at a 3-way intersection, the P means that a pedestrian actor is included in addition to the two non-dut actors, and the 3 means that it is the third unique scenario belonging to the classification of 2TP. The actors of the scenario bl\_2TP3 are $DUT, NPC_1, NPC_2$, and $NPC_3$ where $NPC_3$ is a pedestrian.
+
+Of the 42 atomic block, we identify 13 classifications.
+
+
+```{r echo=FALSE}
+block_type <- unique_blocks %>% str_extract("^\\d[A-Z]P?") %>% table %>% list %>% unlist
+parts <- block_type
+
+waffle(parts,
+       rows = 5,
+       colors = c("#CC0000", "#006600", "#669999", "#00CCCC", 
+                             "#660099", "#CC0066", "#FF9999", "#FF9900", 
+                             "light green", "blue", "brown", "grey", "black"),
+       xlab = "1 Block = 1 Atomic Block")
+```
+
+We believe that the quickest atomic blocks to create are classified with *S* which accounts for 28 of the 42 blocks. We represent these with blue block in the figure below. The 3-way (**T**) and 4-way (**X**) intersections take more time to create. These account for 5 of the atomic blocks and represented with gold blocks in the figure below. Blocks with a pedestrian actor (**P**) are out our scope of ability at the moment. These account for 9 of the block. We represent these as grey blocks in the figure below. 
+
+
+```{r echo=FALSE}
+parts <- block_type
+
+i_blue <- parts %>% names %>% str_detect("S")
+i_orange <- parts %>% names %>% str_detect("[T|X]")
+i_grey <- parts %>% names %>% str_detect("P|M")
+
+choose_color <- function(blue,orange,grey) {
+  if (grey) {return ("grey")}
+  else if (orange) {return ("orange")}
+  else if (blue) {return("blue")}
+  return ("grey")
+}
+
+c_color <- list(i_blue,i_orange,i_grey) %>%  pmap_chr(choose_color)
+
+
+chart <- waffle(parts,
+                rows = 5,
+                colors = c_color,
+                xlab = "1 Block = 1 Atomic Block")
+
+chart
+```
+
+
+
+
+## Breakdown of patterns
+
+Out of the 96 accidents, we were able to classify 60 of them with one atomic block, 18 of them with two atomic blocks in serial, and 7 of them with three atomic blocks in serial. 
+
+```{r echo=FALSE}
+parts <- c(block_count_1,
+           block_count_2,
+           block_count_3,
+           block_count_NA)
+
+names(parts) <- c(paste0("1 block (",block_count_1,")"),
+                  paste0("2 blocks (",block_count_2,")"),
+                  paste0("3 blocks (",block_count_3,")"),
+                  paste0("Not Defined (",block_count_NA,")"))
+
+chart <- waffle(parts,
+                rows=6,
+                legend_pos="top",
+                # title="Scenarios with N blocks",
+                xlab = "1 Block = 1 Scenario",
+                colors = c("#3498db","#58d68d","#eb984e","#626567"))
+chart
+```
+The reasons for not being able to define all of the scenarios are as follows:
+
+
+```{r echo=FALSE}
+reasons <-df %>% filter(is.na(pattern)) %>% select(`Embry-Riddle Notes`)
+colnames(reasons) <- "Reason"
+reasons %>% knitr::kable(format="markdown")
+```
+
+
+
+
+
+## Database Progress
+
+
+```{r echo=FALSE}
+fn <- file.path(getwd(),"progress.xlsx")
+progress <- read_excel(fn,1L)
+```
+
+
+We have completed 18 of 42 atomic blocks. 9 of those 18 completed atomic blocks also include a coverage implementation.
+
+
+```{r echo=FALSE}
+sce_n <- table(progress$scenario)["TRUE"]
+cov_n <- table(progress$coverage)["TRUE"]
+
+parts <- c(cov_n,
+           sce_n - cov_n,
+           unique_blocks_n - sce_n)
+
+names(parts) <- c("Complete w/ Coverage","Complete","To do")
+
+waffle(parts,
+       rows=5,
+       colors = c("dark green","light sea green","grey"),
+       legend_pos = "top",
+       xlab = "1 Block = 1 Scenario")
+
+```
+
+
+In this figure, we display our progress for creating atomic blocks that may recreate the 96 accidents. A dark green block means that all of the atomic blocks needed are completed with coverage for that scenario. A sea green block means that all of the atomic blocks needed are complete with no coverage implementation. A gold block means that at least one of the atomic blocks need are complete.
+
+
+```{r echo=FALSE}
+is_block_complete <- function(bl_name) {
+  if (is.na(bl_name)) {
+    return(NA_integer_)
+  }
+  
+  dfr <- progress[progress$block == bl_name,]
+  if (nrow(dfr) == 0) {
+    return(0L)
+  }
+  else if (!is.na(dfr$coverage)) {
+    return(2L)
+  }
+  else if (!is.na(dfr$scenario)) {
+    return(1L)
+  }
+  return(0L)
+}
+
+bl_1 <- df$`1` %>% map_int(is_block_complete)
+bl_2 <- df$`2` %>% map_int(is_block_complete)
+bl_3 <- df$`3` %>% map_int(is_block_complete)
+
+get_color_from_index <- function(i){
+  if (i == 1) {return("light sea green")}
+  else if (i == 2) {return("dark green")}
+  return("grey")
+}
+
+get_color <- function(one,two,three) {
+  if (is.na(one)) {
+    return ("grey")
+  }
+  else if (is.na(two)){
+    return(get_color_from_index(one))
+  } 
+  else if (is.na(three)) {
+    if (one+two > 0) {
+      if (one+two == 1) {
+        return("orange") 
+      }
+      return(c(one,two) %>% min %>% get_color_from_index)
+    }
+    return(get_color_from_index(0))
+  }
+  x <- c(one,two,three)
+  if (x %>% sum > 0) {
+    if (x %>% sum == 6) {
+      return(x %>% min %>% get_color_from_index)
+    }
+    if (one > 0 & two > 0 & three > 0) {
+      return(c %>% min %>% get_color_from_index)
+    }
+    return("orange") 
+  }
+  return(c(one,two,three) %>% min %>% get_color_from_index)
+}
+
+df_color <- list(bl_1,bl_2,bl_3) %>% pmap_chr(get_color)
+
+parts <- rep(1,bl_1 %>% length)
+
+waffle(parts,
+       colors = df_color,
+       row = 6,
+       legend_pos = "None",
+       xlab = "1 Block = 1 Scenario")
+
+```
+
+
+
+
+
