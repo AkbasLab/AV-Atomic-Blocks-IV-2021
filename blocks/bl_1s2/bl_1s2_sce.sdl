@@ -1,0 +1,23 @@
+# @author [Yara AlRashidi - alrashy1@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_1s2
+# npc begins on the right side of the DUT and it cuts into the same same lane and it may or may not accelerate.
+# @version [1.00]
+# @modified [12.30.2020, Yara AlRashidi, Created.]
+# @modified [01.05.2021, Yara AlRashidi, adjusted lane]
+scenario dut.bl_1s2:
+
+    npc: car
+    p_dur : time
+    p_npc_speed_gt_dut_start : speed
+    p_npc_dist_gt_dut_start : distance
+    p_npc_dist_gt_dut_end : distance
+
+    do cut_in_s : parallel():
+        dut.car.drive()
+        npc.drive(duration: p_dur) with:
+            lane(right_of: dut.car, at: start)
+            lane(same_as: dut.car, at: end)
+            speed(p_npc_speed_gt_dut, faster_than: dut.car)
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            avoid_collisions(false)
