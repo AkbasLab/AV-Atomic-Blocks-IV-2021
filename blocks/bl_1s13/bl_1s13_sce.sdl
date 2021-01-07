@@ -16,7 +16,8 @@ scenario dut.bl_1s13:
     do change_lanes_and_accelerate : parallel():
         dut.car.drive() with:
             speed(p_dut_speed_start, at: start)
-            npc.drive(duration: p_dur) with:
+            
+        npc.drive(duration: p_dur) with:
             position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
             
             change_lane(side: left)
