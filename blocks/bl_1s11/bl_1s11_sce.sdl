@@ -1,6 +1,6 @@
 # bl_1s11_sce.sdl
 # Author: John Thompson
-# Last Modified: December 22 2020
+# Last Modified: January 2021
 # Description:
 #    NPC1 changes lanes to the right. May or may not accelerate.
 
@@ -10,6 +10,7 @@ scenario dut.bl_1s11:
     p_dur: time
     p_dut_speed_start : speed
     p_npc_speed_gt_dut_start : speed
+    p_npc_speed_increase : speed
     p_npc_dist_gt_dut_start : distance
     p_npc_dist_gt_dut_end : distance
     
@@ -22,5 +23,6 @@ scenario dut.bl_1s11:
             speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
             
             change_lane(side: right)
+            change_speed(p_npc_speed_increase)
             position(p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
             avoid_collisions(false)
