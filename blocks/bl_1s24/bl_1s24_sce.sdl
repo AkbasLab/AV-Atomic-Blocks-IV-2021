@@ -1,0 +1,29 @@
+# bl_1s7_sce.sdl
+# Author: John Thompson
+# Last Modified: January 05 2021
+# Description:
+#     NPC accelerates directly behind the DUT
+
+
+scenario dut.bl_1s24:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_speed_increase : speed
+    p_npc_dist_gt_dut_start : distance
+    p_npc_dist_gt_dut_end : distance
+    
+    do same_lane_accelerate : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            lane(same_as: dut.car)
+            keep_lane()
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            
+            change_speed(p_npc_speed_increase)
+            position(p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
+            avoid_collisions(false)
