@@ -1,6 +1,6 @@
 # bl_1s6.tsdl
 # Author: John Thompson
-# Last Modified: December 18 2020
+# Last Modified: January 05 2021
 # Description:
 #   Template file for bl_1s6.
 
@@ -8,6 +8,7 @@ $$template():
     duration: $$param()
     dut_speed_start: $$param()
     npc_speed_gt_dut_start: $$param()
+    npc_speed_increase: $$param()
     npc_dist_lt_dut_start: $$param()
     npc_dist_lt_dut_end: $$param()
     map: $$param()
@@ -27,6 +28,7 @@ extend top.main:
         keep (p_dur in $$(duration))
         keep (p_dut_speed_start in $$(dut_speed_start))
         keep (p_npc_speed_gt_dut_start in $$(npc_speed_gt_dut_start))
+        keep (p_npc_speed_increase in $$(npc_speed_increase))
         keep (p_npc_dist_lt_dut_start in $$(npc_dist_lt_dut_start))
         keep (p_npc_dist_lt_dut_end in $$(npc_dist_lt_dut_end))
         keep (dut.car.color == red)
