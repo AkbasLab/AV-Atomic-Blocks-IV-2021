@@ -12,8 +12,6 @@ scenario dut.bl_1s14:
     p_npc_increase_speed : speed
     p_npc_dist_gt_dut_start : distance
     p_npc_dist_gt_dut_end : distance
-    trace(npc.state.speed, unit:kph, name: npc_speed, title: "npc speed")
-    trace(dut.car.state.speed, unit:kph, name: dut_speed, title: "dut speed")
     
     do change_lanes_and_accelerate : parallel():
         dut.car.drive() with:
