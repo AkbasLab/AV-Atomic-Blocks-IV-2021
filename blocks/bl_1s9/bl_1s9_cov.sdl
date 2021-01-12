@@ -1,15 +1,14 @@
 # @author [Jacob Preseau - preseauj@my.erau.edu]
 # @source ["AV_ValidationVerification"]
-# bl_1s1, 
+# bl_1s9, 
 # Coverage.
 # @version [1.00]
-# @modified [12.14.2020, Jacob Preseau, Created.]
-# @modified [01.07.2020, Jacob Preseau, Updated coverage variables to match the rest.]
+# @modified [01.08.2020, Jacob Preseau, Created.]
 
-extend dut.bl_1s1:
+extend dut.bl_1s9:
 
-    event bl_start is @drive_ahead_s.after_implicits
-    event bl_end is @drive_ahead_s.end
+    event bl_start is @change_lanes_together.after_implicits
+    event bl_end is @change_lanes_together.end
     
     # Lanes
     !dut_lane_start := sample(dut.car.state.road_position.lane_index, @block_start) with:
