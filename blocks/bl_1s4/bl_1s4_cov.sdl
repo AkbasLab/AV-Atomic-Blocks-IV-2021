@@ -4,11 +4,12 @@
 # Coverage.
 # @version [1.00]
 # @modified [01.07.2020, Jacob Preseau, Created.]
+# @modified [01.12.2020, Jacob Preseau, Fixed naming convention problem that caused compilation error.]
 
 extend dut.bl_1s4:
 
-    event bl_start is @change_lane_ahead.after_implicits
-    event bl_end is @change_lane_ahead.end
+    event block_start is @change_lane_ahead.after_implicits
+    event block_end is @change_lane_ahead.end
     
     # Lanes
     !dut_lane_start := sample(dut.car.state.road_position.lane_index, @block_start) with:

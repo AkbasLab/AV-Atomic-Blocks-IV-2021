@@ -4,11 +4,12 @@
 # Coverage.
 # @version [1.00]
 # @modified [01.08.2020, Jacob Preseau, Created.]
+# @modified [01.12.2020, Jacob Preseau, Fixed naming convention problem that caused compilation error.]
 
 extend dut.bl_1s6:
 
-    event bl_start is @slow_behind.after_implicits
-    event bl_end is @slow_behind.end
+    event block_start is @slow_behind.after_implicits
+    event block_end is @slow_behind.end
     
     # Lanes
     !dut_lane_start := sample(dut.car.state.road_position.lane_index, @block_start) with:
