@@ -1,6 +1,6 @@
 # bl_1s11.tsdl
 # Author: John Thompson
-# Last Modified: December 22 2020
+# Last Modified: January 05 2021
 # Description:
 #   Template file for bl_1s11.
 
@@ -8,6 +8,7 @@ $$template():
     duration: $$param()
     dut_speed_start: $$param()
     npc_speed_gt_dut_start: $$param()
+    npc_speed_increase: $$param()
     npc_dist_gt_dut_start: $$param()
     npc_dist_gt_dut_end: $$param()
     map: $$param()
@@ -17,6 +18,7 @@ $$template():
 $$expand():
 import $$(config_path)
 import $$(proj_path)/blocks/bl_1s11/bl_1s11_sce.sdl
+import $$(proj_path)/blocks/bl_1s11/bl_1s11_cov.sdl
 
 
 extend test_config:
@@ -27,6 +29,7 @@ extend top.main:
         keep (p_dur in $$(duration))
         keep (p_dut_speed_start in $$(dut_speed_start))
         keep (p_npc_speed_gt_dut_start in $$(npc_speed_gt_dut_start))
+        keep (p_npc_speed_increase in $$(p_npc_speed_increase))
         keep (p_npc_dist_gt_dut_start in $$(npc_dist_gt_dut_start))
         keep (p_npc_dist_gt_dut_end in $$(npc_dist_gt_dut_end))
         keep (dut.car.color == red)

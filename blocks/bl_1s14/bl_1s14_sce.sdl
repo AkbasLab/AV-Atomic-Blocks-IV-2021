@@ -1,16 +1,15 @@
-# bl_1s11_sce.sdl
+# bl_1s14_sce.sdl
 # Author: John Thompson
-# Last Modified: January 2021
+# Last Modified: January 4 2021
 # Description:
-#    NPC1 changes lanes to the right. May or may not accelerate.
+#    NPC1 is to the left of DUT, when NPC1 accelerates (or not) and changes into DUT's lane
 
-
-scenario dut.bl_1s11:
+scenario dut.bl_1s14:
     npc: car
     p_dur: time
     p_dut_speed_start : speed
     p_npc_speed_gt_dut_start : speed
-    p_npc_speed_increase : speed
+    p_npc_increase_speed : speed
     p_npc_dist_gt_dut_start : distance
     p_npc_dist_gt_dut_end : distance
     
@@ -19,10 +18,14 @@ scenario dut.bl_1s11:
             speed(p_dut_speed_start, at: start)
             
         npc.drive(duration: p_dur) with:
+            lane(left_of: dut.car, at: start)
             position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
             speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
             
             change_lane(side: right)
-            change_speed(p_npc_speed_increase)
+            change_speed(p_npc_increase_speed)
             position(p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
+            
             avoid_collisions(false)
+            
+        

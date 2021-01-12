@@ -1,8 +1,8 @@
-# bl_1s13.tsdl
+# bl_1s14.tsdl
 # Author: John Thompson
 # Last Modified: January 4 2021
 # Description:
-#   Template file for bl_1s13.
+#   Template file for bl_1s14.
 
 $$template():
     duration: $$param()
@@ -17,15 +17,14 @@ $$template():
 
 $$expand():
 import $$(config_path)
-import $$(proj_path)/blocks/bl_1s13/bl_1s13_sce.sdl
-import $$(proj_path)/blocks/bl_1s13/bl_1s13_cov.sdl
-
+import $$(proj_path)/blocks/bl_1s14/bl_1s14_sce.sdl
+import $$(proj_path)/blocks/bl_1s14/bl_1s14_cov.sdl
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
 
 extend top.main:
-    do block: bl_1s13() with:
+    do block: bl_1s14() with:
         keep (p_dur in $$(duration))
         keep (p_dut_speed_start in $$(dut_speed_start))
         keep (p_npc_speed_gt_dut_start in $$(npc_speed_gt_dut_start))

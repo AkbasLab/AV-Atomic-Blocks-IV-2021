@@ -16,6 +16,7 @@ $$template():
 $$expand():
 import $$(config_path)
 import $$(proj_path)/blocks/bl_1s8/bl_1s8_sce.sdl
+import $$(proj_path)/blocks/bl_1s8/bl_1s8_cov.sdl
 
 
 extend test_config:
