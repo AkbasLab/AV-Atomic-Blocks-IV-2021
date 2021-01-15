@@ -3,8 +3,8 @@
 # bl_1s4, 
 # Coverage.
 # @version [1.00]
-# @modified [01.07.2020, Jacob Preseau, Created.]
-# @modified [01.12.2020, Jacob Preseau, Fixed naming convention problem that caused compilation error.]
+# @modified [01.07.2021, Jacob Preseau, Created.]
+# @modified [01.12.2021, Jacob Preseau, Fixed naming convention problem that caused compilation error.]
 
 extend dut.bl_1s4:
 
