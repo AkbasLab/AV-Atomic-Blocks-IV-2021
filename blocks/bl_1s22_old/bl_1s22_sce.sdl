@@ -1,0 +1,34 @@
+# bl_1s22_sce.sdl
+# Author: John Thompson
+# Last Modified: January 5 2021
+# Description:
+#    NPC1 is ahead of and in the same lane as DUT, when NPC1 reverses.
+
+#import ext_intf.sdl
+
+scenario dut.bl_1s22:
+    npc: car
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_speed_gt_earth_end : speed # Does not communicate the use of this parameter,
+                                     # there needs to be a way to reverse the direction!
+    p_npc_dist_gt_dut_start : distance
+    p_npc_dist_gt_dut_end : distance 
+    
+    
+    do ahead_reverse: parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            lane(same_as: dut.car, at: start)
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+        
+            position(p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
+            #speed(p_npc_speed_gt_earth_end, at: end)
+            #speed(top.cpp_tools.getNegative(p_npc_speed_gt_earth_end), at: end) # TEST
+            avoid_collisions(false)
+            
+        

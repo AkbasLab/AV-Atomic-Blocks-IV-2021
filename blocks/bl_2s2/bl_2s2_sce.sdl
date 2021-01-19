@@ -1,0 +1,43 @@
+# @author John Thompson, <thomj130@my.erau.edu>
+# @source AV_ValidationVerification
+# - (Description)
+# @version v1.0
+# @modified [Mon Jan 18 20:08:17 EST 2021. John Thompson Created]
+
+
+scenario dut.bl_2s2:
+    npc1: car
+    npc2: car
+    
+    p_dur: time
+    p_dut_speed_start: speed
+    p_npc1_speed_gt_dut_start: speed
+    p_npc2_speed_gt_dut_start: speed
+    p_npc1_distance_gt_dut_start: distance
+    p_npc1_distance_gt_dut_end: distance
+    p_npc2_distance_gt_dut_start: distance
+    p_npc2_distance_gt_dut_end: distance
+    
+    
+    do block_behavior : parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start)
+            change_lanes(side:right)
+        
+        npc1.drive(duration:p_dur) with: 
+            speed(p_npc1_speed_gt_dut_start)
+            position(p_npc1_distance_gt_dut_start, ahead_of:dut.car, at:start)
+            
+            change_lane(side:right)
+            position(p_npc1_distance_gt_dut_end, ahead_of:dut.car, at:end)
+            
+            avoid_collisions(false)
+        
+        npc2.drive() with:
+            speed(p_npc2_speed_gt_dut_start)
+            position(p_npc2_distance_gt_dut_start, ahead_of:dut.car, at:start)
+            
+            position(p_npc2_distance_gt_dut_end, ahead_of:dut.car, at:end)
+            
+            avoid_collisions(false)
+                
