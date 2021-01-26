@@ -23,7 +23,7 @@ $$template():
 $$expand():
 import $$(config_path)
 import $$(proj_path)/blocks/bl_2s1/bl_2s16_sce.sdl
-import $$(proj_path)/blocks/bl_2s1/bl_2s16_cov.sdl
+# import $$(proj_path)/blocks/bl_2s1/bl_2s16_cov.sdl
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"

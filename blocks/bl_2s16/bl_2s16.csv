@@ -1,0 +1,3 @@
+﻿*bl_2s16,template /pub/home/user2/AV_ValidationVerification/blocks/bl_2s16/bl_2s16.tsdl,,,,,,,,,
+runs,seed,duration,dut_speed_start,npc1_dist_gt_dut_start,npc2_speed_gt_dut_start,npc2_dist_gt_dut_start,npc2_dist_gt_dut_end,map,proj_path,config_path
+3,1,[3..10]second,[20..40]kph,[50..100]m,[-10..10]kph,[-50..-20]m,[20..50]m,long_single_road_2,/pub/home/user2/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl
