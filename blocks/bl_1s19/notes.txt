@@ -1,0 +1,16 @@
+# bl_1s18
+create_msdl_headers --out_dir ./msdl_h --out_style cpp --out_file msdl_bl_1s18_lib --top_file bl_1s18_lib.sdl
+g++ -std=c++11 -fPIC -shared  -isystem ${FTX}/includes -I./msdl_h bl_1s18_lib.cpp ./msdl_h/msdl_bl_1s18_lib.cpp -o libbl_1s18_lib.so
+foretify --work_dir work --verbosity ERROR --seed random --load bl_1s18_tst.sdl
+set config.sim.enable_gui=false
+run
+
+
+
+
+# bl 1s19
+create_msdl_headers --out_dir ./msdl_h --out_style cpp --out_file msdl_bl_1s19_lib --top_file bl_1s19_lib.sdl
+g++ -std=c++11 -fPIC -shared  -isystem ${FTX}/includes -I./msdl_h bl_1s19_lib.cpp ./msdl_h/msdl_bl_1s19_lib.cpp -o libbl_1s18_lib.so
+foretify --work_dir work --verbosity ERROR --seed random --load bl_1s19_tst.sdl
+set config.sim.enable_gui=false
+run

@@ -1,0 +1,31 @@
+# @author [Quentin Goss - gossq@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_1s18, 
+# Test template.
+# @version [1.00]
+# @modified [10.28.2020, Quentin Goss, Created.]
+# @modified [11.03.2020, Quentin Goss, Set a default duration, and changed "npc_speed_gt_dut" to "npc_speed_gt_dut".]
+# @modified [11.05.2020, Quentin Goss, Removed "p_dut_speed_start".]
+import $FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl
+import /pub/home/user3/AV_ValidationVerification/blocks/bl_1s18/bl_1s18_sce.sdl
+import /pub/home/user3/AV_ValidationVerification/blocks/bl_1s18/bl_1s18_cov.sdl
+
+extend test_config:
+    set map = "/pub/home/user3/AV_ValidationVerification/maps/long_single_road_2.xodr"
+    
+extend dut.bl_1s18:
+    def bl_1s18_trace2csv() is external.cpp("bl_1s18_trace2csv","libbl_1s18_lib.so")
+    def end_of_run() is external.cpp("end_of_run","libbl_1s18_lib.so")
+    on @top.clk:
+        call bl_1s18_trace2csv()
+    on @cut_in_s.end:
+        call end_of_run()
+    
+extend top.main:
+    do block : bl_1s18() with:
+        keep (p_dur in [2..4]second)
+        keep (p_npc_speed_gt_dut in [0..10]mph)
+        keep (p_npc_dist_gt_dut_start in [5..30]feet)
+        keep (p_npc_dist_gt_dut_end in [11..50]feet)
+        keep (dut.car.color == red)
+        keep (npc.color == blue)

@@ -35,10 +35,26 @@ import $$(proj_path)/blocks/bl_1s19/bl_1s19_cov.sdl
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
-    
+
+extend dut.bl_1s18:
+    def bl_1s18_trace2csv() is external.cpp("bl_1s18_trace2csv","$$(proj_path)/blocks/bl_1s18/libbl_1s18_lib.so")
+    def end_of_run() is external.cpp("end_of_run","$$(proj_path)/blocks/bl_1s18/libbl_1s18_lib.so")
+    on @top.clk:
+        call bl_1s18_trace2csv()
+    on @cut_in_s.end:
+        call end_of_run()
+
+extend dut.bl_1s19:
+    def bl_1s19_trace2csv() is external.cpp("bl_1s19_trace2csv","$$(proj_path)/blocks/bl_1s19/libbl_1s19_lib.so")
+    def end_of_run() is external.cpp("end_of_run","$$(proj_path)/blocks/bl_1s19/libbl_1s19_lib.so")
+    on @top.clk:
+        call bl_1s19_trace2csv()
+    on @drive_ahead_s.end:
+        call end_of_run()
+
 extend top.main:
     npc : car
-
+    
     do pattern : serial():
         bl_1s19(npc: npc) with:
             keep (dut.car.color == red)
@@ -52,3 +68,4 @@ extend top.main:
             keep (p_npc_speed_gt_dut in $$(bl_1s18_npc_speed_gt_dut))
             keep (p_npc_dist_gt_dut_start in $$(bl_1s18_npc_dist_gt_dut_start))
             keep (npc_dist_gt_dut_end in $$(bl_1s18_npc_dist_gt_dut_end)
+            

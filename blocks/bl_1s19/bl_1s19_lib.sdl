@@ -1,0 +1,5 @@
+import bl_1s19_sce.sdl
+
+extend dut.bl_1s19:
+    def bl_1s19_trace2csv() is external.cpp("bl_1s19_trace2csv","libbl_1s19_lib.so")
+    def end_of_run() is external.cpp("end_of_run","libbl_1s19_lib.so")

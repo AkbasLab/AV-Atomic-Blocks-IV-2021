@@ -1,6 +1,6 @@
 *avs_53,template /pub/home/user3/AV_ValidationVerification/avs/avs_53/avs_53.tsdl,,,,,,,,,
 runs,seed,map,proj_path,config_path,bl_1s19_npc_speed_gt_dut_start,bl_1s19_npc_dist_gt_dut_start,bl_1s19_npc_dist_gt_dut_end,bl_1s18_npc_speed_gt_dut,bl_1s18_npc_dist_gt_dut_start,bl1s18_npc_dist_gt_dut_end
-10,1,"fill(long_single_road_2,circ_fix,Town04)",/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet,[0..50]mph,[-10..10]feet,[-10..30]feet
+1,1,"fill(long_single_road_2,circ_fix,Town04)",/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet,[0..50]mph,[-10..10]feet,[-10..30]feet
 10,11,"fill(long_single_road_2,circ_fix,Town04)",/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet,[0..50]mph,[-10..10]feet,[-10..30]feet
 10,21,"fill(long_single_road_2,circ_fix,Town04)",/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet,[0..50]mph,[-10..10]feet,[-10..30]feet
 10,31,"fill(long_single_road_2,circ_fix,Town04)",/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet,[0..50]mph,[-10..10]feet,[-10..30]feet

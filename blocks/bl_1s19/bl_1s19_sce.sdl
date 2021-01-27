@@ -23,3 +23,4 @@ scenario dut.bl_1s19:
             position(distance: p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
             position(distance: p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
             avoid_collisions(false)
+        
