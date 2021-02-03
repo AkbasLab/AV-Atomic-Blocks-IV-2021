@@ -1,0 +1,6 @@
+
+actor ext_intf_api:    
+    def getNegative(value: speed): speed is external.cpp("getNegative", "toolkit.so")
+    
+extend top:
+    cpp_tools: ext_intf_api

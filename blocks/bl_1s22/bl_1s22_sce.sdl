@@ -1,0 +1,35 @@
+# bl_1s22_sce.sdl
+# Author: John Thompson
+# Last Modified: January 07 2021
+# Description:
+#    NPC1 is ahead of and in the same lane as DUT, when NPC1 reverses.
+
+scenario dut.bl_1s22:
+    npc: car with:
+        set it.physical.min_speed = -150kph
+        set it.policy.min_speed = -150kph
+    
+    p_dur: time
+    p_dut_speed_start : speed
+    p_npc_speed_gt_dut_start : speed
+    p_npc_speed_gt_earth_end : speed
+    p_npc_dist_gt_dut_start : distance
+    p_npc_dist_gt_dut_end : distance 
+    trace(npc.state.speed, unit:kph, name: npc_speed, title: "npc speed")
+    trace(dut.car.state.speed, unit:kph, name: dut_speed, title: "dut speed")
+    
+    do ahead_reverse: parallel():
+        dut.car.drive() with:
+            speed(p_dut_speed_start, at: start)
+            
+        npc.drive(duration: p_dur) with:
+            lane(same_as: dut.car, at: start)
+            position(p_npc_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            speed(p_npc_speed_gt_dut_start, faster_than: dut.car, at: start)
+            
+            position(p_npc_dist_gt_dut_end, ahead_of: dut.car, at: end)
+            speed(p_npc_speed_gt_earth_end, at: end)
+            
+            avoid_collisions(false)
+            
+        
