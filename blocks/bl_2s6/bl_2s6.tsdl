@@ -1,7 +1,7 @@
 
 #@authorJohnThompson,<thomj130@my.erau.edu>
 #@sourceAV_ValidationVerification
-#-Templatefileforbl_2s2
+#-Templatefileforbl_2s6
 #@versionv1.0
 #@modified[MonJan1820:08:17EST2021.JohnThompsonCreated]
 
@@ -21,15 +21,15 @@ $$template():
     
 $$expand():
 import $$(config_path)
-import $$(proj_path)/blocks/bl_2s2/bl_2s2_sce.sdl
-import $$(proj_path)/blocks/bl_2s2/bl_2s2_cov.sdl
+import $$(proj_path)/blocks/bl_2s6/bl_2s6_sce.sdl
+import $$(proj_path)/blocks/bl_2s6/bl_2s6_cov.sdl
 
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
     
 extend top.main:
-    do block: bl_2s2() with:
+    do block: bl_2s6() with:
         keep (p_dur in $$(duration))
         keep (p_dut_speed_start in $$(dut_speed_start))
         keep (p_npc1_speed_gt_dut_start in $$(npc1_speed_gt_dut_start))
