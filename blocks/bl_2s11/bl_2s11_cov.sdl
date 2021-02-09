@@ -1,0 +1,126 @@
+# @author [Jacob Preseau - preseauj@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_2s11,
+# Coverage.
+# @version [1.00]
+# @modified [02.09.2021, Jacob Preseau, Created.]
+
+extend dut.bl_2s11:
+    
+    event block_start is @npc1_change_lane_s.after_implicits
+    event block_end is @npc1_change_lane_s.end
+    
+    # Lanes
+    !dut_lane_start := sample(dut.car.state.road_position.lane_index, @block_start) with:
+        cover(it,
+            text : "the value of dut.car lane index at the start",
+            range : [1..3]
+        )
+        
+    !dut_lane_end := sample(dut.car.state.road_position.lane_index, @block_end) with:
+        cover(it,
+            text : "the value of dut.car lane index at the end",
+            range : [1..3]
+        )
+    
+    !npc1_lane_start := sample(npc1.state.road_position.lane_index, @block_start) with:
+        cover(it,
+            text : "the value of npc1 lane index at the start",
+            range : [1..3]
+        )
+
+    !npc1_lane_end := sample(npc1.state.road_position.lane_index, @block_end) with:
+        cover(it,
+            text : "the value of npc1 lane index at the end",
+            range : [1..3]
+        )
+    
+    #!dut_x_npc1_lane_start := 
+    cover([dut_lane_start,npc1_lane_start], name: dut_x_npc1_lane_start)
+    #!dut_x_npc1_lane_end := 
+    cover([dut_lane_end,npc1_lane_end], name: dut_x_npc1_lane_end)
+    
+    # Speed
+    !dut_speed_start := sample(dut.car.state.speed, @block_start) with:
+        cover(it,
+            text : "The speed of dut.car in mph at the start",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+        
+    !dut_speed_end := sample(dut.car.state.speed, @block_end) with:
+        cover(it,
+            text : "The speed of dut.car in mph at the end",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+
+    !npc1_speed_start := sample(npc1.state.speed, @block_start) with:
+        cover(it,
+            text : "The speed of npc1 in mph at the start",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+        
+    !npc1_speed_end := sample(npc1.state.speed, @block_end) with:
+        cover(it,
+            text : "The speed of npc1 in mph at the end",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+    
+    !npc2_speed_start := sample(npc2.state.speed, @block_start) with:
+        cover(it,
+            text : "The speed of npc2 in mph at the start",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+        
+    !npc2_speed_end := sample(npc2.state.speed, @block_end) with:
+        cover(it,
+            text : "The speed of npc2 in mph at the end",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+        
+    !dut_speed_gt_npc1_start := sample(dut.car.state.speed - npc1.state.speed, @block_start) with:
+        cover(it,
+            text : "The difference in speed between dut.car and npc1 in mph at the start.",
+            unit : mph,
+            range : [-50..50],
+            every : 5
+        )
+        
+    !dut_speed_gt_npc1_end := sample(dut.car.state.speed - npc1.state.speed, @block_end) with:
+        cover(it,
+            text : "The difference in speed between dut.car and npc1 in mph at the end.",
+            unit : mph,
+            range : [-50..50],
+            every : 5
+        )
+    
+    !dut_speed_gt_npc2_start := sample(dut.car.state.speed - npc2.state.speed, @block_start) with:
+        cover(it,
+            text : "The difference in speed between dut.car and npc2 in mph at the start.",
+            unit : mph,
+            range : [-50..50],
+            every : 5
+        )
+        
+    !dut_speed_gt_npc2_end := sample(dut.car.state.speed - npc2.state.speed, @block_end) with:
+        cover(it,
+            text : "The difference in speed between dut.car and npc2 in mph at the end.",
+            unit : mph,
+            range : [-50..50],
+            every : 5
+        )
+        
+    # Collision
+    !dut_collision := sample(true, @dut.car.collision) with:
+        cover(it, text: "Whether dut.car collided.")

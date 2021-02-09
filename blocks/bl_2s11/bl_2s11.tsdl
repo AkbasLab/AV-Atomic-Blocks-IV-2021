@@ -1,14 +1,16 @@
 # @author [Jacob Preseau - preseauj@my.erau.edu]
 # @source ["AV_ValidationVerification"]
-# bl_2s16, 
+# bl_2s11, 
 # Template file.
 # @version [1.00]
-# @modified [1.15.2021, Jacob Preseau, Created.]
+# @modified [02.09.2021, Jacob Preseau, Created.]
 
 $$template():
     duration: $$param()
     dut_speed_start: $$param()
     npc1_speed_gt_dut_start: $$param()
+    npc1_dist_gt_dut_start: $$param()
+    npc1_dist_gt_dut_end: $$param()
 
     npc2_speed_gt_dut_start: $$param()
     npc2_dist_gt_dut_start: $$param()
@@ -20,18 +22,20 @@ $$template():
 
 $$expand():
 import $$(config_path)
-import $$(proj_path)/blocks/bl_2s16/bl_2s16_sce.sdl
-# import $$(proj_path)/blocks/bl_2s16/bl_2s16_cov.sdl
+import $$(proj_path)/blocks/bl_2s11/bl_2s11_sce.sdl
+import $$(proj_path)/blocks/bl_2s11/bl_2s11_cov.sdl
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
 
 extend top.main:
-    do block: bl_2s16() with:
+    do block: bl_2s11() with:
         keep (p_dur in $$(duration))
         keep (p_dut_speed_start in $$(dut_speed_start))
         
         keep (p_npc1_speed_gt_dut_start in $$(npc1_speed_gt_dut_start))
+        keep (p_npc1_dist_gt_dut_start in $$(npc1_dist_gt_dut_start))
+        keep (p_npc1_dist_gt_dut_end in $$(npc1_dist_gt_dut_end))
 
         keep (p_npc2_speed_gt_dut_start in $$(npc2_speed_gt_dut_start))
         keep (p_npc2_dist_gt_dut_start in $$(npc2_dist_gt_dut_start))
