@@ -24,8 +24,9 @@ scenario dut.bl_2s16:
         
         npc1.drive(duration: p_dur) with:
             lane(3)
-            speed(0)
+            speed(0kph)
             position(p_npc1_dist_gt_dut_start, ahead_of: dut.car, at: start)
+            avoid_collisions(false)
         
         npc2.drive(duration: p_dur) with:
             lane(side_of: dut.car, at: start)

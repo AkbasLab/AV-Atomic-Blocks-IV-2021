@@ -8,7 +8,8 @@
 $$template():
     duration: $$param()
     dut_speed_start: $$param()
-    npc1_speed_gt_dut_start: $$param()
+    
+    npc1_dist_gt_dut_start: $$param()
 
     npc2_speed_gt_dut_start: $$param()
     npc2_dist_gt_dut_start: $$param()
@@ -21,7 +22,7 @@ $$template():
 $$expand():
 import $$(config_path)
 import $$(proj_path)/blocks/bl_2s16/bl_2s16_sce.sdl
-# import $$(proj_path)/blocks/bl_2s16/bl_2s16_cov.sdl
+import $$(proj_path)/blocks/bl_2s16/bl_2s16_cov.sdl
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
@@ -32,6 +33,8 @@ extend top.main:
         keep (p_dut_speed_start in $$(dut_speed_start))
         
         keep (p_npc1_speed_gt_dut_start in $$(npc1_speed_gt_dut_start))
+        keep (p_npc1_dist_gt_dut_start in $$(npc1_dist_gt_dut_start))
+        keep (p_npc1_dist_gt_dut_end in $$(npc1_dist_gt_dut_end))
 
         keep (p_npc2_speed_gt_dut_start in $$(npc2_speed_gt_dut_start))
         keep (p_npc2_dist_gt_dut_start in $$(npc2_dist_gt_dut_start))

@@ -8,7 +8,7 @@
 extend dut.bl_2s16:
     
     event block_start is @change_lane_s.after_implicits
-    event block_end is @drive_ahead_s.end
+    event block_end is @change_lane_s.end
     
     # Lanes
     !dut_lane_start := sample(dut.car.state.road_position.lane_index, @block_start) with:
@@ -36,7 +36,7 @@ extend dut.bl_2s16:
         )
     
     #!dut_x_npc1_lane_start := 
-    cover([dut_lane_start,npc_1lane_start], name: dut_x_npc1_lane_start)
+    cover([dut_lane_start,npc1_lane_start], name: dut_x_npc1_lane_start)
     #!dut_x_npc1_lane_end := 
     cover([dut_lane_end,npc1_lane_end], name: dut_x_npc1_lane_end)
     
