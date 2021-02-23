@@ -1,0 +1,14 @@
+import $FTX/workshop/common/workshop_config.sdl
+
+import $HOME/workshop/scenarios/parallel_collision.sdl
+import $HOME/workshop/scenario_22/sc22_coverage.sdl
+
+
+extend top.main:
+    set_map(name: "$FTX/workshop/maps/circ_fix.xodr")
+    
+    do ci : parallel_collision()
+    
+    
+    
+        
