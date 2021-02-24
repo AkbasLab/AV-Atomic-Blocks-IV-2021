@@ -1,0 +1,41 @@
+#bl_2s9.sce.sdl
+#Author: Ariane Uwase 
+#Last Modified: January 27 2021
+#Description: 
+#  NPC1 changes into DUT's lane, and NPC2 changes into the lane left of DUT
+
+scenario dut.bl_2s9:
+   npc1:car
+   npc2:car
+
+   p_dur:time
+   p_dut_speed_start:speed
+   p_npc1_speed_gt_dut_start:speed
+   p_npc1_dist_gt_dut_start:distance
+   p_npc1_dist_gt_dut_end:distance
+   p_npc2_speed_gt_dut_start:speed
+   p_npc2_dist_gt_dut_start:distance
+   p_npc2_dist_gt_dut_end:distance
+
+   do change_lane : parallel():
+      dut.car.drive() with: 
+         speed(p_dut_speed_start, at:start)
+
+      npc1.drive(duration: p_dur) with:
+         lane(same_as: dut.car, at:end)
+         speed(p_npc1_speed_gt_dut_start, faster_than: dut.car, at:start)
+         position(p_npc1_dist_gt_dut_start, ahead_of: dut.car, at:start)
+         position(p_npc1_dist_gt_dut_end, ahead_of: dut.car, at:end)
+
+         avoid_collisions(false)
+
+      npc2.drive(duration: p_dur)with:
+         lane(left_of:dut.car, at:end)
+         speed(p_npc2_speed_gt_dut_start, faster_than: dut.car, at:start)
+         position(p_npc2_dist_gt_dut_start, ahead_of: dut.car, at:start)
+         position(p_npc2_dist_gt_dut_end, ahead_of: dut.car, at:end)
+
+         avoid_collisions(false)
+
+
+
