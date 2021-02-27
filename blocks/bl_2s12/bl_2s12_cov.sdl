@@ -1,12 +1,12 @@
 
 #@authorJohnThompson,<thomj130@my.erau.edu>
 #@sourceAV_ValidationVerification
-#-Coverageforbl_2s2
+#-Coverageforbl_2s12
 #@versionv1.0
 #@modified[MonJan1820:08:17EST2021.JohnThompsonCreated]
 
 
-extend dut.bl_2s2:
+extend dut.bl_2s12:
     event block_start is @block_behavior.after_implicits
     event block_end is @block_behavior.end
     

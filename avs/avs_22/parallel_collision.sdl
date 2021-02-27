@@ -1,0 +1,46 @@
+
+scenario dut.parallel_collision: 
+    dut_path: path
+    car2_path: path
+    car2: car
+    junction1: junction
+    event sc22_coverage
+    
+    
+    path_length ( path: dut_path, min_path_length: 30feet, max_path_length: 430feet, allow_junction: true)
+    path_min_driving_lanes (path: dut_path, min_driving_lanes: 2)
+    
+    path_length ( path: car2_path, min_path_length: 30feet, max_path_length: 430feet, allow_junction: true)
+    path_min_driving_lanes (path: car2_path, min_driving_lanes: 2)
+    path_same_dest(dut_path, car2_path)
+    path_different_origin(dut_path, car2_path)
+
+    keep (car2.color == blue)
+    
+    dut_direction: direction with:
+        keep(default it in [left]) 
+    car2_direction: direction with:
+        keep(default it in [straight]) 
+
+    do serial ():
+        join_junction: parallel(duration: [0.5..2]second):
+            dut.car.drive(path: dut_path) with:
+                path_over_junction( junction1, dut_direction)
+                speed(speed: [5..35]kph)
+                #position(distance: [5..50]meter, ahead_of: car2, at: start)
+                
+            car2.drive(path: car2_path, adjust: true) with:
+                path_over_junction( junction1, car2_direction)
+                #speed(speed: [50..150]kph)
+                #l0: position(distance:  [20..50]meter, behind:  dut.car, at:start)
+                speed(speed: [20..40]kph, faster_than: dut.car)
+                position(distance: [1..10]meter, ahead_of: dut.car, at: end)
+                lane(same_as: dut.car, at: end)
+                avoid_collisions(false)
+
+        slow: parallel(duration: [0.5..2]second):
+                dut.car.drive(path: dut_path)
+                car2.drive(path: car2_path) with:
+                    keep_lane()
+                    change_speed(speed: -[10..20]kph)
+        emit sc22_coverage

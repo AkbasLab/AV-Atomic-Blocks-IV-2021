@@ -1,45 +1,43 @@
-# @author [Jacob Preseau - preseauj@my.erau.edu]
-# @source ["AV_ValidationVerification"]
-# bl_2s16, 
-# Template file.
-# @version [1.00]
-# @modified [1.15.2021, Jacob Preseau, Created.]
+
+#@authorJohnThompson,<thomj130@my.erau.edu>
+#@sourceAV_ValidationVerification
+#-Templatefileforbl_2s5
+#@versionv1.0
+#@modified[MonJan1820:08:17EST2021.JohnThompsonCreated]
+
 
 $$template():
     duration: $$param()
     dut_speed_start: $$param()
-    
-    npc1_dist_gt_dut_start: $$param()
-
+    npc1_speed_gt_dut_start: $$param()
     npc2_speed_gt_dut_start: $$param()
+    npc1_dist_gt_dut_start: $$param()
+    npc1_dist_gt_dut_end: $$param()
     npc2_dist_gt_dut_start: $$param()
     npc2_dist_gt_dut_end: $$param()
-    
     map: $$param()
     proj_path: $$param()
     config_path: $$param()
-
+    
 $$expand():
 import $$(config_path)
-import $$(proj_path)/blocks/bl_2s16/bl_2s16_sce.sdl
-import $$(proj_path)/blocks/bl_2s16/bl_2s16_cov.sdl
+import $$(proj_path)/blocks/bl_2s5/bl_2s5_sce.sdl
+import $$(proj_path)/blocks/bl_2s5/bl_2s5_cov.sdl
+
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
-
+    
 extend top.main:
-    do block: bl_2s16() with:
+    do block: bl_2s5() with:
         keep (p_dur in $$(duration))
         keep (p_dut_speed_start in $$(dut_speed_start))
-        
         keep (p_npc1_speed_gt_dut_start in $$(npc1_speed_gt_dut_start))
-        keep (p_npc1_dist_gt_dut_start in $$(npc1_dist_gt_dut_start))
-        keep (p_npc1_dist_gt_dut_end in $$(npc1_dist_gt_dut_end))
-
         keep (p_npc2_speed_gt_dut_start in $$(npc2_speed_gt_dut_start))
-        keep (p_npc2_dist_gt_dut_start in $$(npc2_dist_gt_dut_start))
-        keep (p_npc2_dist_gt_dut_end in $$(npc2_dist_gt_dut_end))
-        
+        keep (p_npc1_distance_gt_dut_start in $$(npc1_dist_gt_dut_start))
+        keep (p_npc1_distance_gt_dut_end in $$(npc1_dist_gt_dut_end))
+        keep (p_npc2_distance_gt_dut_start in $$(npc2_dist_gt_dut_start))
+        keep (p_npc2_distance_gt_dut_end in $$(npc2_dist_gt_dut_end))
         keep (dut.car.color == red)
         keep (npc1.color == blue)
         keep (npc2.color == green)

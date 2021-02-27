@@ -6,7 +6,7 @@
 #@modified[MonJan1820:08:17EST2021.JohnThompsonCreated]
 
 
-scenario dut.bl_2s2:
+scenario dut.bl_2s12:
     npc1: car
     npc2: car
     
@@ -18,27 +18,31 @@ scenario dut.bl_2s2:
     p_npc1_distance_gt_dut_end: distance
     p_npc2_distance_gt_dut_start: distance
     p_npc2_distance_gt_dut_end: distance
+    p_npc2_speed_change: speed
     
     
     do block_behavior : serial():
         parallel():
             dut.car.drive() with:
-                speed(p_dut_speed_start, at: start)
-                change_lane(side:right)
+                speed(p_dut_speed_start, at:start)
             
-            npc1.drive(duration:p_dur) with:
+            npc1.drive(duration: p_dur) with:
+                lane(right_of: dut.car, at:start)
                 speed(p_npc1_speed_gt_dut_start, faster_than: dut.car, at:start)
                 position(p_npc1_distance_gt_dut_start, ahead_of: dut.car, at:start)
                 
-                change_lane(side:right)
-                position(p_npc1_distance_gt_dut_end, ahead_of: dut.car, at:end)
+                position(p_npc1_distance_gt_dut_end, ahead_of: dut.car, at:end)               
                 
+                lane(same_as: dut.car, at:end)
                 avoid_collisions(false)
                 
             npc2.drive() with:
+                lane(same_as: dut.car, at: start)
                 speed(p_npc2_speed_gt_dut_start, faster_than: dut.car, at:start)
                 position(p_npc2_distance_gt_dut_start, ahead_of: dut.car, at:start)
-            
-                position(p_npc2_distance_gt_dut_end, ahead_of: dut.car, at:end)
                 
+                change_speed(p_npc2_speed_change)
+                position(p_npc2_distance_gt_dut_end, ahead_of: dut.car, at:end)
+
                 avoid_collisions(false)
+                

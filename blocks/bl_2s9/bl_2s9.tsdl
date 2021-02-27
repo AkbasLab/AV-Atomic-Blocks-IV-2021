@@ -1,34 +1,36 @@
-# @author [Jacob Preseau - preseauj@my.erau.edu]
-# @source ["AV_ValidationVerification"]
-# bl_2s16, 
-# Template file.
+# @author [Ariane Uwase, uwasea@my.erau.edu]
+# @source [AV_ValidationVerification]
+# Template file bl_2s9
 # @version [1.00]
-# @modified [1.15.2021, Jacob Preseau, Created.]
+# @modified [Fri 02/19/2021, Ariane Uwase, Created]
 
 $$template():
     duration: $$param()
-    dut_speed_start: $$param()
-    
-    npc1_dist_gt_dut_start: $$param()
+    dut_speed_start:$$param()
 
-    npc2_speed_gt_dut_start: $$param()
-    npc2_dist_gt_dut_start: $$param()
-    npc2_dist_gt_dut_end: $$param()
-    
+    npc1_speed_gt_dut_start:$$param()
+    npc1_dist_gt_dut_start:$$param()
+    npc1_dist_gt_dut_start:$$param()
+
+    npc2_speed_gt_dut_start:$$param()
+    npc2_dist_gt_dut_start:$$param()
+    npc2_dist_gt_dut_start:$$param()
+
     map: $$param()
     proj_path: $$param()
     config_path: $$param()
 
+
 $$expand():
 import $$(config_path)
-import $$(proj_path)/blocks/bl_2s16/bl_2s16_sce.sdl
-import $$(proj_path)/blocks/bl_2s16/bl_2s16_cov.sdl
+import $$(proj_path)/blocks/bl_2s9/bl_2s9_sce.sdl
+import $$(proj_path)/blocks/bl_2s9/bl_2s9_cov.sdl
 
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
 
 extend top.main:
-    do block: bl_2s16() with:
+    do block: bl_2s9() with:
         keep (p_dur in $$(duration))
         keep (p_dut_speed_start in $$(dut_speed_start))
         
@@ -39,7 +41,7 @@ extend top.main:
         keep (p_npc2_speed_gt_dut_start in $$(npc2_speed_gt_dut_start))
         keep (p_npc2_dist_gt_dut_start in $$(npc2_dist_gt_dut_start))
         keep (p_npc2_dist_gt_dut_end in $$(npc2_dist_gt_dut_end))
-        
+
         keep (dut.car.color == red)
         keep (npc1.color == blue)
         keep (npc2.color == green)
