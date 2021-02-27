@@ -1,3 +1,5 @@
-*bl_1s19,template /pub/home/user3/AV_ValidationVerification/blocks/bl_1s19/bl_1s19.tsdl,,,,,,,,
-runs,seed,dut_speed_start,npc_speed_gt_dut_start,npc_dist_gt_dut_start,npc_dist_gt_dut_end,map,proj_path,config_path
-2,1,[0..40]mph,[10..30]mph,[-10..-1]feet,[0..20]feet,long_single_road_2,/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl
+*bl_1s19,template /pub/home/user3/AV_ValidationVerification/blocks/bl_1s19/bl_1s19.tsdl,,,,,,
+runs,seed,map,proj_path,config_path,npc_speed_gt_dut_start,npc_dist_gt_dut_start,npc_dist_gt_dut_end
+50,1,long_single_road_2,/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet
+50,1,circ_fix,/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet
+50,1,Town04,/pub/home/user3/AV_ValidationVerification,$FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl,[0..50]mph,[-100..10]feet,[-10..10]feet

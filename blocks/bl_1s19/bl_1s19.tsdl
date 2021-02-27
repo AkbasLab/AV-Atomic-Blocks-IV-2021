@@ -22,6 +22,13 @@ import $$(proj_path)/blocks/bl_1s19/bl_1s19_cov.sdl
 extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
 
+extend dut.bl_1s19:
+    def bl_1s19_trace2csv(is_collision: bool) is external.cpp("bl_1s19_trace2csv","$$(proj_path)/blocks/bl_1s19/libbl_1s19_lib.so")
+    on @top.clk:
+        call bl_1s19_trace2csv(false)
+    on @dut.car.collision:
+        call bl_1s19_trace2csv(true)
+
 extend top.main:
     do block : bl_1s19() with:
         keep (p_dur in $$(duration))

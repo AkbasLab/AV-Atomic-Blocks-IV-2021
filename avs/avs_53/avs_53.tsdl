@@ -11,9 +11,10 @@
 #  Time: 03: 12 Pm 
 #  Vehicle 1: Moving (AV)
 #  Vehicle 2: Moving"
-# @version [1.00]
+# @version [1.02]
 # @modified [11.03.2020, Quentin Goss, Created.]
 # @modified [11.05.2020, Quentin Goss, Removed the second npc color change from bl_1s18 which was causing an error.]
+# @modified [01.27.2021, Quentin Goss, Added c++ interface to trace x, y, and speed of DUT and NPC.]
 $$template():
     map: $$param()
     proj_path: $$param()
@@ -37,20 +38,18 @@ extend test_config:
     set map = "$$(proj_path)/maps/$$(map).xodr"
 
 extend dut.bl_1s18:
-    def bl_1s18_trace2csv() is external.cpp("bl_1s18_trace2csv","$$(proj_path)/blocks/bl_1s18/libbl_1s18_lib.so")
-    def end_of_run() is external.cpp("end_of_run","$$(proj_path)/blocks/bl_1s18/libbl_1s18_lib.so")
+    def bl_1s18_trace2csv(is_collision: bool) is external.cpp("bl_1s18_trace2csv","$$(proj_path)/blocks/bl_1s18/libbl_1s18_lib.so")
     on @top.clk:
-        call bl_1s18_trace2csv()
-    on @cut_in_s.end:
-        call end_of_run()
+        call bl_1s18_trace2csv(false)
+    on @dut.car.collision:
+        call bl_1s18_trace2csv(true)
 
 extend dut.bl_1s19:
-    def bl_1s19_trace2csv() is external.cpp("bl_1s19_trace2csv","$$(proj_path)/blocks/bl_1s19/libbl_1s19_lib.so")
-    def end_of_run() is external.cpp("end_of_run","$$(proj_path)/blocks/bl_1s19/libbl_1s19_lib.so")
+    def bl_1s19_trace2csv(is_collision: bool) is external.cpp("bl_1s19_trace2csv","$$(proj_path)/blocks/bl_1s19/libbl_1s19_lib.so")
     on @top.clk:
-        call bl_1s19_trace2csv()
-    on @drive_ahead_s.end:
-        call end_of_run()
+        call bl_1s19_trace2csv(false)
+    on @dut.car.collision:
+        call bl_1s19_trace2csv(true)
 
 extend top.main:
     npc : car

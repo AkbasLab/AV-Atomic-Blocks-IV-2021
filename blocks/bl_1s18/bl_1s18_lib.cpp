@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2020 Foretellix Ltd. All Rights Reserved.
  */
@@ -20,7 +21,7 @@ using namespace foretify;
 using namespace dut_scenarios;
 
 
-void dut_scenarios::bl_1s18_t::bl_1s18_trace2csv()
+void dut_scenarios::bl_1s18_t::bl_1s18_trace2csv(bool_t is_collision)
 {
 	/* Actors */
 	car_t dut = top().dut().car();
@@ -39,6 +40,7 @@ void dut_scenarios::bl_1s18_t::bl_1s18_trace2csv()
 				dut.state().speed().mile_per_hour() << "," <<
 				dut.state().global_position().x().feet() << "," <<
 				dut.state().global_position().y().feet() << "," <<
+				is_collision <<
 				std::endl << 
                 top().time().millisecond()  << "," <<
                 "bl_1s18," <<
@@ -48,6 +50,7 @@ void dut_scenarios::bl_1s18_t::bl_1s18_trace2csv()
 				npc1.state().speed().mile_per_hour() << "," <<
 				npc1.state().global_position().x().feet() << "," <<
 				npc1.state().global_position().y().feet() << "," <<
+				is_collision <<
 				std::endl;
 }
 

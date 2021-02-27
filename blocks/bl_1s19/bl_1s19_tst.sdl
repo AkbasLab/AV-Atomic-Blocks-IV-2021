@@ -14,13 +14,13 @@ extend test_config:
     set map = "/pub/home/user3/AV_ValidationVerification/maps/long_single_road_2.xodr"
     
 extend dut.bl_1s19:
-    def bl_1s19_trace2csv() is external.cpp("bl_1s19_trace2csv","libbl_1s19_lib.so")
+    def bl_1s19_trace2csv(is_collision: bool) is external.cpp("bl_1s19_trace2csv","libbl_1s19_lib.so")
     def end_of_run() is external.cpp("end_of_run","libbl_1s19_lib.so")
     on @top.clk:
-        call bl_1s19_trace2csv()
-    on @drive_ahead_s.end:
-        call end_of_run()
-    
+        call bl_1s19_trace2csv(false)
+    on @dut.car.collision:
+        call bl_1s19_trace2csv(true)
+        
 extend top.main:
     do block : bl_1s19() with:
         keep (p_dur in [2..4]second)

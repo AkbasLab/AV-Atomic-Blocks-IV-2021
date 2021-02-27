@@ -1,5 +1,5 @@
 import bl_1s18_sce.sdl
 
 extend dut.bl_1s18:
-    def bl_1s18_trace2csv() is external.cpp("bl_1s18_trace2csv","libbl_1s18_lib.so")
+    def bl_1s18_trace2csv(is_collision: bool) is external.cpp("bl_1s18_trace2csv","libbl_1s18_lib.so")
     def end_of_run() is external.cpp("end_of_run","libbl_1s18_lib.so")
