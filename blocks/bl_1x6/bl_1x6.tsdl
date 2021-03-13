@@ -1,0 +1,33 @@
+
+#@authorJohnThompson,<thomj130@my.erau.edu>
+#@sourceAV_ValidationVerification
+#-Templatefileforbl_1x6
+#@versionv1.0
+#@modified[MonJan1820:08:17EST2021.JohnThompsonCreated]
+
+
+$$template():
+    duration: $$param()
+    dut_speed_start: $$param()
+    npc1_speed_gt_dut_start: $$param()
+    map: $$param()
+    proj_path: $$param()
+    config_path: $$param()
+    
+$$expand():
+import $FTX_VEHICLE_MANEUVER_LIB/util/av_utility_scenarios.sdl
+import $$(config_path)
+import $$(proj_path)/blocks/bl_1x6/bl_1x6_sce.sdl
+## import $$(proj_path)/blocks/bl_1x6/bl_1x6_cov.sdl
+
+
+extend test_config:
+    set map = "$$(proj_path)/maps/$$(map).xodr"
+    
+extend top.main:
+    do block: bl_1x6() with:
+        keep (p_dur in $$(duration))
+        keep (p_dut_speed_start in $$(dut_speed_start))
+        keep (p_npc1_speed_gt_dut_start in $$(npc1_speed_gt_dut_start))
+        keep (dut.car.color == red)
+        keep (npc1.color == blue)
