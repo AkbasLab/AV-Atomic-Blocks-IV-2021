@@ -1,0 +1,37 @@
+
+#@authorJohnThompson,<thomj130@my.erau.edu>
+#@sourceAV_ValidationVerification
+#-(Description)
+#@versionv1.0
+#@modified[MonJan1820:08:17EST2021.JohnThompsonCreated]
+
+
+scenario dut.bl_1x6:
+    dut_path: path_over_junction
+    
+    npc1: car  
+    npc1_path: path_over_junction
+    
+    # The actors will use the same junction
+    keep(dut_path.junction == npc1_path.junction)
+    
+    # DUT and NPC should start on different in_roads
+    keep(dut_path.in_road != npc1_path.in_road)
+    
+    p_dur: time
+    p_dut_speed_start: speed
+    p_npc1_speed_gt_dut_start: speed
+    
+    
+    do block_behavior : serial():  
+        mix():
+            dut_traverse: dut.car.traverse_junction(dut_path)# with:
+               #speed(p_dut_speed_start, at: start)
+            npc1_traverse: npc1.traverse_junction(npc1_path) #with:
+               #speed(p_npc1_speed_gt_dut_start, faster_than: dut.car, at: start)
+               
+        with:
+            synchronize(slave: npc1_traverse.enter.end,
+                        master: dut_traverse.enter.end)
+
+                
