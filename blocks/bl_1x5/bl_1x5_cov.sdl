@@ -1,0 +1,82 @@
+# @author [Jacob Preseau - preseauj@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_1x5, 
+# Coverage.
+# @version [1.00]
+# @modified [02.26.2020, Jacob Preseau, Created.]
+# @modified [03.30.2021, Jacob Preseau, Renamed from 1x2 to 1x5, the generic case.]
+
+extend dut.bl_1x5:
+
+    event block_start is @cross_junction_s.after_implicits
+    event block_end is @cross_junction_s.end
+    
+    # Distance
+    !dut_dist_gt_npc_start := sample(  map.distance_between_locations( dut.car.state.location, npc.state.location ), @block_start  ) with:
+        cover(it,
+            text : "The distance between dut.car and npc in feet",
+            unit : feet,
+            range : [-100..100],
+            every : 10
+        )
+    
+    !dut_dist_gt_npc_end := sample(  map.distance_between_locations( dut.car.state.location, npc.state.location ), @block_end  ) with:
+        cover(it,
+            text : "The distance between dut.car and npc in feet",
+            unit : feet,
+            range : [-100..100],
+            every : 10
+        )
+
+    # Speed
+    !dut_speed_start := sample(dut.car.state.speed, @block_start) with:
+        cover(it,
+            text : "The speed of dut.car in mph",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+        
+    !dut_speed_end := sample(dut.car.state.speed, @block_end) with:
+        cover(it,
+            text : "The speed of dut.car in mph",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+
+    !npc_speed_start := sample(npc.state.speed, @block_start) with:
+        cover(it,
+            text : "The speed of npc in mph",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+        
+    !npc_speed_end := sample(npc.state.speed, @block_end) with:
+        cover(it,
+            text : "The speed of npc in mph",
+            unit : mph,
+            range : [0..100],
+            every : 10
+        )
+        
+    !dut_speed_gt_npc_start := sample(dut.car.state.speed - npc.state.speed, @block_start) with:
+        cover(it,
+            text : "The difference in speed between dut.car and npc in mph.",
+            unit : mph,
+            range : [-40..40],
+            every : 5
+        )
+        
+    !dut_speed_gt_npc_end := sample(dut.car.state.speed - npc.state.speed, @block_end) with:
+        cover(it,
+            text : "The difference in speed between dut.car and npc in mph.",
+            unit : mph,
+            range : [-40..40],
+            every : 5
+        )
+        
+    # Collision
+    !dut_collision := sample(true, @dut.car.collision) with:
+        cover(it, text: "Whether dut.car collided.")

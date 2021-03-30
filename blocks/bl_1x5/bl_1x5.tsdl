@@ -1,0 +1,40 @@
+# @author [Jacob Preseau - preseauj@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_1x5, 
+# Template file.
+# @version [1.00]
+# @modified [02.26.2021, Jacob Preseau, Created.]
+# @modified [03.09.2021, Jacob Preseau, Modified to fix the previous issue stopping the scenario from running.]
+# @modified [03.17.2021, Jacob Preseau, Another modification to fix the order of imports.]
+# @modified [03.30.2021, Jacob Preseau, Renamed from 1x2 to 1x5, the generic case.]
+
+
+$$template():
+    duration: $$param()
+    dut_speed_start: $$param()
+    npc_speed_gt_dut_start: $$param()
+    
+    map: $$param()
+    proj_path: $$param()
+    config_path: $$param()
+
+$$expand():
+import $$(config_path)
+
+import $FTX_VEHICLE_MANEUVER_LIB/util/av_utility_scenarios.sdl
+
+import $$(proj_path)/blocks/bl_1x5/bl_1x5_sce.sdl
+# import $$(proj_path)/blocks/bl_1x5/bl_1x5_cov.sdl
+
+
+extend test_config:
+    set map = "$$(proj_path)/maps/$$(map).xodr"
+
+extend top.main:
+    do block: bl_1x5() with:
+        keep (p_dur in $$(duration))
+        keep (p_dut_speed_start in $$(dut_speed_start))
+        keep (p_npc_speed_gt_dut_start in $$(npc_speed_gt_dut_start))
+        
+        keep (dut.car.color == red)
+        keep (npc.color == blue)
