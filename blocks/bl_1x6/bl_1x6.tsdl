@@ -18,7 +18,7 @@ $$expand():
 import $FTX_VEHICLE_MANEUVER_LIB/util/av_utility_scenarios.sdl
 import $$(config_path)
 import $$(proj_path)/blocks/bl_1x6/bl_1x6_sce.sdl
-## import $$(proj_path)/blocks/bl_1x6/bl_1x6_cov.sdl
+import $$(proj_path)/blocks/bl_1x6/bl_1x6_cov.sdl
 
 
 extend test_config:
