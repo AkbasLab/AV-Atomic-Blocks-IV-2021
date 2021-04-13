@@ -1,6 +1,6 @@
 # bl_1s21_cov.sdl
 # Author: Jacob Preseau
-# Last Modified: November 23 2020
+# Last Modified: April 13 2021
 # Description:
 # Coverage file for bl_1s21.
 
@@ -22,7 +22,8 @@ extend dut.bl_1s21:
             range: [1..3]
         )
     
-    !npc_lane_x := cover([npc_lane_start,npc_lane_end])
+    #!npc_lane_x := 
+    cover([npc_lane_start,npc_lane_end], name: npc_lane_x)
 
     # Distances between cars
     !dut_npc_dist_start := sample(map.distance_between_locations(dut.car.state.location, npc.state.location), @bl_start) with:

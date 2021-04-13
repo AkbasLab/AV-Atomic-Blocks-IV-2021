@@ -5,11 +5,12 @@
 # @version [1.00]
 # @modified [12.30.2020, Yara AlRashidi, Created.]
 # @modified [01.05.2021, Yara AlRashidi, adjusted lane]
+# @modified [04.13.2021, Jacob Preseau, fixed naming error in NPC speed variable]
 scenario dut.bl_1s2:
 
     npc: car
     p_dur : time
-    p_npc_speed_gt_dut_start : speed
+    p_npc_speed_gt_dut : speed
     p_npc_dist_gt_dut_start : distance
     p_npc_dist_gt_dut_end : distance
 

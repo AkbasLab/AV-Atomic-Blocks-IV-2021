@@ -6,8 +6,8 @@
 
 extend dut.bl_1s5:
     
-    event bl_start is @npc_accel_s.after_implicits
-    event bl_end is @npc_accel_s.end
+    event bl_start is @npc_brake_s.after_implicits
+    event bl_end is @npc_brake_s.end
     
     # Lanes
     
