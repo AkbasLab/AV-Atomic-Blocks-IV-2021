@@ -4,7 +4,7 @@ scenario dut.parallel_collision:
     car2_path: path
     car2: car
     junction1: junction
-    event sc22_coverage
+#    event sc22_coverage
     
     
     path_length ( path: dut_path, min_path_length: 30feet, max_path_length: 430feet, allow_junction: true)
@@ -43,4 +43,4 @@ scenario dut.parallel_collision:
                 car2.drive(path: car2_path) with:
                     keep_lane()
                     change_speed(speed: -[10..20]kph)
-        emit sc22_coverage
+#        emit sc22_coverage

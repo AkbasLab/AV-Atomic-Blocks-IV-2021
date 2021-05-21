@@ -1,0 +1,3 @@
+*bl_exm1,template /pub/home/user6/jmt_workspace/blocks/bl_1s24/bl_1s24.tsdl,,,,,,,
+runs,seed,duration,dut_speed_start,npc_speed_gt_dut_start,npc_dist_gt_dut_start,map,proj_path,config_path
+50,1,[1..10]second,[20..30]mph,[-15..-18]mph,[20..40]feet,long_single_road_2,/pub/home/user6/jmt_workspace,/pub/home/user6/jmt_workspace/workshop_config.sdl

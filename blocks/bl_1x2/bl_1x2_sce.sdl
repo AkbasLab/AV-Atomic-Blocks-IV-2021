@@ -1,0 +1,37 @@
+# @author [Jacob Preseau - preseauj@my.erau.edu]
+# @source ["AV_ValidationVerification"]
+# bl_1x2, 
+# Scenario.
+# @version [1.00]
+# @modified [02.26.2021, Jacob Preseau, Created.]
+# @modified [03.09.2021, Jacob Preseau, Modified to fix the previous issue stopping the scenario from running.]
+
+scenario dut.bl_1x2:
+    npc: car
+#    junction1: junction
+    
+    p_dur: time
+    p_dut_speed_start: speed
+    
+    p_npc_speed_gt_dut_start: speed
+    
+    dut_path: path_over_junction
+    npc_path: path_over_junction
+    keep(dut_path.junction == npc_path.junction)
+    keep(dut_path.in_road != npc_path.in_road)
+    npc_to_dut_time_delta: time with: 
+            keep(default it in [(-1)..1]second)
+    
+    dut_direction: direction with:
+        keep(default it in [left,straight,right])
+    npc_direction: direction with:
+        keep(default it in [straight])
+    
+    do cross_junction_s: serial(duration: p_dur):
+        mix():
+            dut_traverse: dut.car.traverse_junction(dut_path)
+            npc_traverse: npc.traverse_junction(npc_path)
+        with:
+            synchronize(slave: npc_traverse.enter.end,
+                        master: dut_traverse.enter.end,
+                        offset: npc_to_dut_time_delta)

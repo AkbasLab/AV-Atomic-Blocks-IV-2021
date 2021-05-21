@@ -1,0 +1,19 @@
+# 3. Run the code
+foretify --work_dir work --verbosity ERROR --seed random --load bl_1x2_tst.sdl
+
+# 4. (if in the terminal) At the fortify prompt
+set config.sim.enable_gui=false
+
+# 5. Run the simulation
+run
+
+# 6. Quit
+quit
+
+
+
+# tsdl - gui
+frun --work_dir workhhh --csv /pub/home/user2/AV_ValidationVerification/blocks/bl_1x2/bl_1x2.csv --info --debug --create --line 3 --int="--gui"
+
+# tsdl - no gui
+frun --work_dir work_hhh --csv /pub/home/user2/AV_ValidationVerification/blocks/bl_1x2/bl_1x2.csv --info --debug --create

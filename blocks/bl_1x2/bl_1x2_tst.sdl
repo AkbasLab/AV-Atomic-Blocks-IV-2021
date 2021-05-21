@@ -1,0 +1,15 @@
+import $FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl
+
+# ADAS Scenarios Library (traverse junction)
+import $FTX_VEHICLE_MANEUVER_LIB/util/av_utility_scenarios.sdl
+
+import bl_1x2_sce.sdl
+
+extend test_config:
+    set map = "/pub/home/user3/AV_ValidationVerification/maps/Town04.xodr"
+
+extend top.main:
+    do block : bl_1x2() with:
+        keep(p_dur in [2..4]second)
+        keep(p_dut_speed_start in [10..30]mph)
+        keep(p_npc_speed_gt_dut_start in [5..20]mph)

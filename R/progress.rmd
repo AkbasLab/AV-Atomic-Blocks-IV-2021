@@ -1,0 +1,16 @@
+
+
+
+```{r}
+library(tidyverse)
+library(openxlsx)
+```
+
+
+
+```{r}
+home <- "E:/GIT Projects/AV_ValidationVerification/R"
+fn <- file.path(home,"progress_clean.xlsx")
+progress <- read.xlsx(fn)
+```
+

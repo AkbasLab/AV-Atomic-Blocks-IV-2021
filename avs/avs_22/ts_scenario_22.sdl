@@ -1,11 +1,12 @@
-import $FTX/workshop/common/workshop_config.sdl
+import $FTX/env/basic/exe_platforms/sumo_ssp/config/sumo_config.sdl
 
-import $HOME/workshop/scenarios/parallel_collision.sdl
-import $HOME/workshop/scenario_22/sc22_coverage.sdl
+import parallel_collision.sdl
 
+extend test_config:
+    set map = "/pub/home/user3/AV_ValidationVerification/maps/circ_fix.xodr"
 
 extend top.main:
-    set_map(name: "$FTX/workshop/maps/circ_fix.xodr")
+#    set_map(name: "$FTX/workshop/maps/circ_fix.xodr")
     
     do ci : parallel_collision()
     
