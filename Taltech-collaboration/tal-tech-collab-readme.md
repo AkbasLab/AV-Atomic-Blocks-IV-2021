@@ -1,5 +1,5 @@
 # TalTech-AV-with-Foretify
-A collaboration between Embry-Riddle Aeronautical University and Tal-Tech University to integrate Foretify by Foretellix&trade; into the autonomous vehicle testing pipeline.
+A collaboration between Embry-Riddle Aeronautical University and Tal-Tech University to integrate Foretify&trade; by Foretellix into the autonomous vehicle testing pipeline.
 
 <a href="https://github.com/AkbasLab/TalTech-AV-with-Foretify/">Github repo link.</a><br>
 <a href="https://taltech.ee/en">Tal-tech website link.</a>
