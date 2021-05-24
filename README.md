@@ -1,6 +1,8 @@
 # Autonomous Vehicle Validation and Verification
 Our goal is to validate the decision making layer of autonomous vehicles (AV). This repo is one of many steps in that journey. Here, we construct logical scenarios called "atomic blocks" from a [dataset of function scenarios](https://www.dmv.ca.gov/portal/vehicle-industry-services/autonomous-vehicles/autonomous-vehicle-collision-reports/). This dataset consists of autonomous vehicle collision reports from the California Deparment of Motor Vehicles (CADMV).<br>
 
+For a description of our methodology in this repo and its application, please refer to our paper at IEEE IV 2021: "Generation of Modular and Measurable Validation Scenarios for Autonomous Vehicles Using Accident Data."
+
 
 <!-- AV accidents, separation to atomic blocks, simulation of variations, coverage analysis -->
 
